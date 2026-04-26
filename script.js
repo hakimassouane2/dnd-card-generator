@@ -28,7 +28,6 @@
 		type_requirement: "Type",
 		type: "Type",
 		item_type: "Type of the item",
-		attunement_requirement: "Attunement",
 		rarity: "Rarity",
 		common: "Common",
 		uncommon: "Uncommon",
@@ -36,14 +35,9 @@
 		epic: "Epic",
 		legendary: "Legendary",
 		artifact: "Artifact",
-		attunement: "Attunement",
 		item_details: "Details of the item",
 		item_charges: "Item charges:",
 		none: "None",
-		flip_short_edge: "Flip for short-edge printing",
-		// save: "Save",
-        // load: "Load",
-        // cards_loaded: "Cards loaded successfully!",
 		clear_all_confirm: "Are you sure you want to clear all cards?",
 	},
 	russian: {
@@ -56,7 +50,6 @@
 		type_requirement: "Тип",
 		type: "Тип",
 		item_type: "Тип предмета",
-		attunement_requirement: "Настройка",
 		rarity: "Редкость",
 		common: "Обычный",
 		uncommon: "Необычный",
@@ -64,15 +57,32 @@
 		epic: "Эпический",
 		legendary: "Легендарный",
 		artifact: "Артефакт",
-		attunement: "Настройка",
 		item_details: "Подробное описание",
 		item_charges: "Заряды предмета:",
 		none: "Нет",
-		flip_short_edge: "Перевернуть для печати<br>по короткому краю",
-		// save: "Сохранить",
-        // load: "Загрузить",
-        // cards_loaded: "Карты успешно загружены!",
 		clear_all_confirm: "Вы уверены, что хотите очистить все карты?",
+	},
+	french: {
+		print: "Imprimer",
+		toggle_preview: "Basculer<br>l'aperçu",
+		item: "Objet",
+		item_name: "Nom de l'objet",
+		short_description_requirement: "Description courte",
+		image_requirement: "Image",
+		type_requirement: "Type",
+		type: "Type",
+		item_type: "Type de l'objet",
+		rarity: "Rareté",
+		common: "Commun",
+		uncommon: "Peu commun",
+		rare: "Rare",
+		epic: "Épique",
+		legendary: "Légendaire",
+		artifact: "Artéfact",
+		item_details: "Détails de l'objet",
+		item_charges: "Charges :",
+		none: "Aucune",
+		clear_all_confirm: "Êtes-vous sûr de vouloir effacer toutes les cartes ?",
 	},
 };
 
@@ -123,6 +133,7 @@
 
     // Re-run textFit before printing to use the correct print layout metrics
     window.addEventListener('beforeprint', () => {
+        updateEmptyCards();
         fit_text();
         elements = document.getElementsByClassName('card-details')
         for (const element of elements) {
@@ -141,10 +152,6 @@
 
     // Function to update all language-dependent text
     function updateAllText() {
-		const flipLabel = document.querySelector("#flip-on-short-edge-label");
-        if (flipLabel) {
-            flipLabel.innerHTML = translation[currentLanguage]["flip_short_edge"];
-        }
         document.querySelectorAll(".item-name").forEach((element) => {
             element.innerHTML = translation[currentLanguage]["item"];
         });
@@ -193,14 +200,6 @@
                 element.innerHTML = translation[currentLanguage]["item_type"];
             }
         });
-        document
-            .querySelectorAll(".attunement-editor > label > span")
-            .forEach((element) => {
-                element.innerHTML = translation[currentLanguage]["attunement_requirement"];
-            });
-        document.querySelectorAll(".item-attunement").forEach((element) => {
-            element.innerHTML = translation[currentLanguage]["attunement"];
-        });
         document.querySelectorAll(".item-details-editor").forEach((element) => {
             element.placeholder = translation[currentLanguage]["item_details"];
         });
@@ -234,7 +233,6 @@
     // Initial HTML generation: Build strings first, then set innerHTML once
     const itemEditorHtmls = [];
     const A4Htmls = [];
-    const backsideHtmls = []; // New array for back sides
 
     for (let i = 1; i <= NUM_ITEMS; i++) {
         itemEditorHtmls.push(`
@@ -289,13 +287,6 @@
                     </div>
                 </div>
 
-                <div class="attunement-editor item-property">
-                    <label>
-                        <input id="item-attunement-${i}" type="checkbox" checked>
-                        <span>${translation[currentLanguage]["attunement_requirement"]}</span>
-                    </label>
-                </div>
-    
                 <div class="details-editor-container">
                     <textarea id="item-details-${i}" class="item-details-editor" placeholder="${translation[currentLanguage]["item_details"]}"></textarea>
                 </div>
@@ -330,12 +321,6 @@
                                 ${translation[currentLanguage]["item_type"]}
                             </div>
                         </div>
-                        <div id="card-attunement-${i}" class="item-attunement-container">
-                            <span class="material-symbols-outlined" style="color: grey;">
-                                check_box_outline_blank
-                            </span>
-                            <span class="item-attunement">${translation[currentLanguage]["attunement"]}</span>
-                        </div>
                     </div>
                 </div>
                 <hr>
@@ -343,34 +328,13 @@
                 </div>
             </div>
 
-            <div id="card-battery-container-${i}" class="battery-container">
-                <div id="card-battery-${i}" class="battery">
-                    <div class="battery-section">
-                    </div>
-                </div>
-                <div class="battery-terminal">
+            <div id="card-charges-container-${i}" class="charges-container">
+                <div id="card-charges-${i}" class="charges-circles">
                 </div>
             </div>
-            
+
         </div>
     	`);
-        // Add backside HTML
-        backsideHtmls.push(`
-        <div id="card-back-${i}" class="card-container card-backside">
-            <div class="card-outline card-back-outline">
-                <div class="card-back-content">
-					<svg xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="0 0 597 524">
-						<g class="dragon-primary" stroke-width="0">
-							<path d="M126 68.8v37l-8.2 9.4c-22.4 25.6-36.6 55.5-39.6 83.2-1 9-.6 9.2 3.1 2.6 15.8-28.2 45.2-53.2 77.7-66.2l9.5-3.7-10-.1c-9.3 0-18.3 1.3-26.5 4-15.7 5-17 .5-2.7-9.2 20.3-13.8 58.2-19.9 82.2-13.1 9.7 2.7-14.9-11.2-28.8-16.3-13.5-5-8.8-7.8 11.3-6.8 33.7 1.6 59.4 9.8 85.1 27 11.7 7.8 10.9 7.8 10.9-.3 0-14.3-1.5-18.6-15.3-44.6-7.8-14.5-5.8-18.5 6.4-12.9 26.6 12 38.4 35.8 49.3 99.4 5.6 33 10.1 43.3 27.8 64.1 4.5 5.4 10.4 12.4 13.1 15.5 17.2 20.6 18.6 54.3 3.1 76.8-6.1 8.8-8.8 8.6-12-1.1-2.3-6.8-8.8-19.8-13.4-26.6-7.7-11.3-15.1-16.7-31.5-22.9-6.1-2.3-8-3.3-11.3-5.8-1.9-1.5-4.8-4.5-6.4-6.6-3-4.2-3.6-3.5-1.4 1.7 2.1 5.2 8.8 10.1 18.4 13.7 17 6.3 28.5 19.2 36.1 40 4.7 13 3.6 14.4-7.1 9.5-3-1.4-8.3-3.1-11.9-3.8-6.3-1.3-6.4-1.3-13.2-9.7-17.2-21.2-38-39-53.7-46.2-7-3.2-11.6-5-14.5-5.8-1.6-.5-5.7-1.6-9-2.5-8.2-2.3-27.6-2.3-37 0-15.4 3.8-17.6 3.3-14.5-3.1 4.4-8.8 16.9-20.3 29.2-27l6.3-3.4h-8.6c-12.1 0-27.8 2.9-39.4 7.4-13.8 5.4-15.1 4.5-8.7-6.3 8.4-14.5 28.5-32.4 48.9-43.6 11.2-6.2 11.1-6.7-.8-2.6-37.3 13-63.7 39-76 75-1.6 4.7-2.9 8.9-2.9 9.3 0 .5 3.4-1.5 7.5-4.3 10.3-7 25.8-13.9 31.3-13.9 5.1 0 5.2.5.6 5.8-10.9 12.8-15.7 29.5-12.5 43.5 1.3 5.5 1.4 5.5 8-.5 3.3-3.1 7.1-5.8 8.5-6.2 1.4-.3 4.7-1.9 7.3-3.4 12.9-7.5 24-10.4 23.5-6.2-2.9 24.9 6.4 36.6 43.8 55 12.2 6.1 15.1 7.4 30 14 5.2 2.3 11.5 5.1 14 6.2 65.9 29.6 96.4 57.5 108.5 99.2 1.4 5 2.7 9.2 3 9.4.2.3 3.9-1.7 8.2-4.4 93.5-58.2 131.2-174.5 89.6-276.4-28-68.6-90.3-120.5-162-134.8-22.4-4.6-21-4.5-124-4.9l-99.3-.4z"/>
-							<path d="M293.7 192.2c-2.4 19.7 7.1 33.8 22.7 33.8h3.9l-2.1-2.3c-1.2-1.3-4.7-7.2-7.7-13.1-6.1-11.9-9.9-17.9-13.7-21.4l-2.5-2.3zM104 232.6c-11.4 26.4-10 51.7 4.4 80.2 3.8 7.4 14.8 24.6 16.5 25.6.8.5 1.1 21.7 1.1 73.2V484h64.8l1.6-8.9c9.8-53.3.1-88-37.1-132.2-5.4-6.4-13.5-16-18.1-21.4-26.3-31.3-35.5-56.4-31.4-85.5 1.3-9 .9-9.8-1.8-3.4"/>
-						</g>
-						<path class="dragon-secondary" d="M202 270.4c-8.6 3.8-19 9.6-17.4 9.6.7 0 1.3 3.3 1.7 8.3 1.7 23.9 14.7 38.9 59 68.2 48.7 32.2 64.3 44.9 78.2 63.3 10.4 13.8 16.2 26.3 21.5 46.5l1.3 4.8 5.1-.6c26.9-3.4 62.4-14.4 60.6-18.8-.5-1.2-2-6.3-3.5-11.2-6.5-22-19.8-40.8-40.5-57.4-19.8-15.9-38.3-26-85.4-46.8-58.7-25.8-74.4-40.7-69.3-65.6 1-4.8-.9-4.9-11.3-.3"/>
-					</svg>
-                </div>
-				<div class="card-back-logo-background"></div>
-            </div>
-        </div>
-        `);
     }
 
     item_editors.innerHTML = itemEditorHtmls.join('');
@@ -380,9 +344,6 @@
     A4.innerHTML = `
         <div class="print-page front-page" id="front-page">
             ${A4Htmls.join('')}
-        </div>
-        <div class="print-page back-page" id="back-page">
-            ${backsideHtmls.join('')}
         </div>
     `;
 
@@ -412,16 +373,6 @@
 	function toggle_preview() {
         const main_section = document.getElementById(`main-section`);
         main_section.classList.toggle("no-preview");
-    }
-
-    const flipCheckbox = document.getElementById('flip-on-short-edge');
-    if (flipCheckbox) {
-        flipCheckbox.addEventListener('change', (event) => {
-            const backPage = document.querySelector('.back-page');
-            if (backPage) {
-                backPage.classList.toggle('flipped-for-short-edge', event.target.checked);
-            }
-        });
     }
 
 	const printButton = document.getElementById('print-button');
@@ -481,7 +432,6 @@
         const imageValueInput = document.getElementById(`item-image-value-${i}`);
         const typeRequirementCheckbox = document.getElementById(`item-type-requirement-${i}`);
         const typeValueInput = document.getElementById(`item-type-value-${i}`);
-        const attunementCheckbox = document.getElementById(`item-attunement-${i}`);
         const raritySelect = document.getElementById(`item-rarity-${i}`);
         const detailsTextarea = document.getElementById(`item-details-${i}`);
         const chargesRangeInput = document.getElementById(`item-charges-${i}`);
@@ -493,7 +443,6 @@
         imageValueInput.addEventListener('change', (event) => change_image(event.target));
         typeRequirementCheckbox.addEventListener('change', (event) => toggle_type(event.target));
         typeValueInput.addEventListener('keyup', (event) => change_type(event.target));
-        attunementCheckbox.addEventListener('change', (event) => toggle_attunement(event.target));
         raritySelect.addEventListener('change', (event) => change_rarity(event.target));
         detailsTextarea.addEventListener('keyup', (event) => change_details(event.target));
         chargesRangeInput.addEventListener('input', (event) => change_charges(event.target));
@@ -520,20 +469,14 @@
 	function change_rarity(element) {
         const item_number = get_item_number(element);
         const card_container = document.getElementById(`card-${item_number}`);
-		const card_container_back = document.getElementById(`card-back-${item_number}`);
         const selectedRarity = element.value;
 
-        // List of all possible rarity classes
         const rarityClasses = ['rarity-common', 'rarity-uncommon', 'rarity-rare', 'rarity-epic', 'rarity-legendary', 'rarity-artifact'];
 
-        // Remove all existing rarity classes
         card_container.classList.remove(...rarityClasses);
-		card_container_back.classList.remove(...rarityClasses);
 
-        // Add the new rarity class if it's not common (or if you want a specific common style)
         if (selectedRarity && selectedRarity !== 'common') {
             card_container.classList.add(`rarity-${selectedRarity}`);
-			card_container_back.classList.add(`rarity-${selectedRarity}`);
         }
     }
 
@@ -619,22 +562,6 @@
         fit_text();
     }
 
-    function toggle_attunement(element) {
-        const item_number = get_item_number(element);
-        const card_short_description = document.getElementById(
-            `card-short-description-${item_number}`
-        );
-        const card_attunement = document.getElementById(`card-attunement-${item_number}`);
-        if (element.checked) {
-            card_attunement.style.display = "flex";
-            card_short_description.classList.remove("no-attunement");
-        } else {
-            card_attunement.style.display = "none";
-            card_short_description.classList.add("no-attunement");
-        }
-		fit_text();
-    }
-
 	function change_details(element) {
         const item_number = get_item_number(element);
         const card_details = document.getElementById(`card-details-${item_number}`);
@@ -650,21 +577,21 @@
         const item_charges_display = document.getElementById(
             `item-charges-value-${item_number}`
         );
-        const card_battery_container = document.getElementById(
-            `card-battery-container-${item_number}`
+        const card_charges_container = document.getElementById(
+            `card-charges-container-${item_number}`
         );
-        const card_charges = document.getElementById(`card-battery-${item_number}`);
+        const card_charges = document.getElementById(`card-charges-${item_number}`);
 
         if (element.value === "0") {
-            card_battery_container.style.display = "none";
+            card_charges_container.style.display = "none";
             item_charges_display.innerHTML = translation[currentLanguage]["none"];
         } else {
-            card_battery_container.style.display = "flex";
-            let battery_sections = ``;
+            card_charges_container.style.display = "flex";
+            let circles = ``;
             for (let i = 1; i <= parseInt(element.value); i++) {
-                battery_sections += `<div class="battery-section"></div>`;
+                circles += `<div class="charge-circle"></div>`;
             }
-            card_charges.innerHTML = battery_sections;
+            card_charges.innerHTML = circles;
             item_charges_display.innerHTML = element.value;
         }
         fit_text();
@@ -683,7 +610,6 @@
                 imageDataUrl: document.getElementById(`card-image-value-${i}`).style.backgroundImage,
                 typeRequired: document.getElementById(`item-type-requirement-${i}`).checked,
                 typeValue: document.getElementById(`item-type-value-${i}`).value,
-                attunement: document.getElementById(`item-attunement-${i}`).checked,
                 details: document.getElementById(`item-details-${i}`).value,
                 charges: document.getElementById(`item-charges-${i}`).value,
             };
@@ -740,7 +666,6 @@
             const imageReqCheckbox = document.getElementById(`item-image-requirement-${i}`);
             const typeReqCheckbox = document.getElementById(`item-type-requirement-${i}`);
             const typeValueInput = document.getElementById(`item-type-value-${i}`);
-            const attunementCheckbox = document.getElementById(`item-attunement-${i}`);
             const detailsTextarea = document.getElementById(`item-details-${i}`);
             const chargesRange = document.getElementById(`item-charges-${i}`);
 
@@ -751,12 +676,11 @@
 			applyImageToCard(i, cardData.imageDataUrl);
             typeReqCheckbox.checked = cardData.typeRequired !== false;
             typeValueInput.value = cardData.typeValue || '';
-            attunementCheckbox.checked = cardData.attunement !== false;
             detailsTextarea.value = cardData.details || '';
             chargesRange.value = cardData.charges || '0';
 
             // Trigger all update functions to refresh the card previews
-            [raritySelect, shortDescCheckbox, imageReqCheckbox, typeReqCheckbox, attunementCheckbox].forEach(el => el.dispatchEvent(new Event('change', { bubbles: true })));
+            [raritySelect, shortDescCheckbox, imageReqCheckbox, typeReqCheckbox].forEach(el => el.dispatchEvent(new Event('change', { bubbles: true })));
             [nameInput, typeValueInput, detailsTextarea].forEach(el => el.dispatchEvent(new Event('keyup', { bubbles: true })));
 			chargesRange.dispatchEvent(new Event('input', { bubbles: true }));
         });
@@ -787,7 +711,23 @@
 
 	// --- Local Storage Functions ---
 
+    function updateEmptyCards() {
+        for (let i = 1; i <= NUM_ITEMS; i++) {
+            const name = document.getElementById(`item-name-${i}`).value.trim();
+            const typeValue = document.getElementById(`item-type-value-${i}`).value.trim();
+            const details = document.getElementById(`item-details-${i}`).value.trim();
+            const imageDataUrl = document.getElementById(`card-image-value-${i}`).style.backgroundImage;
+            const charges = document.getElementById(`item-charges-${i}`).value;
+            const hasImage = imageDataUrl && imageDataUrl !== 'none' && imageDataUrl !== '';
+
+            const isEmpty = !name && !typeValue && !details && !hasImage && charges === "0";
+            const cardFront = document.getElementById(`card-${i}`);
+            if (cardFront) cardFront.classList.toggle('card-empty', isEmpty);
+        }
+    }
+
     function saveStateToLocalStorage() {
+        updateEmptyCards();
         const state = {
             language: languageSelect.value,
             cards: getAllCardsData(),
@@ -817,6 +757,7 @@
     // Initial calls to set up text and fit text after DOM is ready
     updateAllText();
     loadStateFromLocalStorage();
+    updateEmptyCards();
     fit_text();
 
     window.addEventListener("load", (event) => {
