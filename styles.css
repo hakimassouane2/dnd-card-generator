@@ -58,6 +58,15 @@ main {
     .print-page {
         width: 210mm;
         height: 297mm;
+        margin: 0 !important;
+        gap: 0 !important;
+        box-shadow: none !important;
+        break-after: page;
+        page-break-after: always;
+    }
+    .print-page:last-child {
+        break-after: auto;
+        page-break-after: auto;
     }
 
 	body {
@@ -128,6 +137,26 @@ main {
 }
 #language-icon {
 	margin-right: 0.5rem;
+}
+#page-count-control {
+	display: flex;
+	align-items: center;
+	gap: 0.4rem;
+}
+#page-count-control .pretty-button {
+	min-width: 0;
+}
+#page-count-control .pretty-button span {
+	padding: 0.5rem 0.8rem;
+}
+#page-count-display {
+	font-weight: bold;
+	min-width: 1.5rem;
+	text-align: center;
+	color: #fff;
+	background-color: rgb(5, 6, 45);
+	padding: 0.5rem 0.8rem;
+	border-radius: 6px;
 }
 #top-menu-container:has(+ #main-section)
 	> #toggle-preview-button
@@ -421,6 +450,9 @@ main.no-preview > .A4-container {
 	background-color: rgba(255, 255, 255, 1);
 	box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
+.print-page + .print-page {
+	margin-top: 1.5rem;
+}
 .A4 {
 	display: flex;
 	flex-direction: column;
@@ -586,23 +618,192 @@ main.no-preview > .A4-container {
 }
 
 
-/* --- Rarity Styles --- */
-.card-container.rarity-uncommon {
+/* --- Rarity Styles (item cards only) --- */
+.card-container[data-card-type="item"].rarity-uncommon {
     background: radial-gradient(circle, hsl(141, 76%, 61%), hsl(141, 76%, 31%));
 }
 
-.card-container.rarity-rare {
+.card-container[data-card-type="item"].rarity-rare {
     background: radial-gradient(circle, hsl(211, 100%, 70%), hsl(211, 100%, 40%));
 }
 
-.card-container.rarity-epic {
+.card-container[data-card-type="item"].rarity-epic {
     background: radial-gradient(circle, hsl(271, 76%, 81%), hsl(271, 76%, 51%));
 }
 
-.card-container.rarity-legendary {
+.card-container[data-card-type="item"].rarity-legendary {
     background: radial-gradient(circle, hsl(36, 100%, 75%), hsl(36, 100%, 45%));
 }
 
-.card-container.rarity-artifact {
+.card-container[data-card-type="item"].rarity-artifact {
     background: radial-gradient(circle, hsl(355, 78%, 76%), hsl(355, 78%, 46%));
+}
+
+/* --- Card-type visibility toggle --- */
+.item-editor[data-card-type="spell"] .item-only,
+.card-container[data-card-type="spell"] .item-only-card {
+    display: none !important;
+}
+.item-editor[data-card-type="item"] .spell-only,
+.card-container[data-card-type="item"] .spell-only-card {
+    display: none !important;
+}
+
+/* --- Spell editor specific --- */
+.card-type-editor,
+.spell-level-editor,
+.spell-element-editor,
+.spell-utility-editor,
+.spell-casting-time-editor,
+.spell-range-editor,
+.spell-damage-editor,
+.spell-damage-type-editor,
+.spell-duration-editor,
+.spell-concentration-editor,
+.spell-upcast-editor {
+    margin-bottom: 8px;
+}
+.card-type-editor label,
+.spell-level-editor label,
+.spell-element-editor label,
+.spell-casting-time-editor label,
+.spell-range-editor label,
+.spell-damage-editor label,
+.spell-damage-type-editor label,
+.spell-duration-editor label {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+.card-type-editor select,
+.spell-level-editor select,
+.spell-element-editor select {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    flex-grow: 1;
+}
+.spell-casting-time-editor input[type="text"],
+.spell-range-editor input[type="text"],
+.spell-damage-editor input[type="text"],
+.spell-damage-type-editor input[type="text"],
+.spell-duration-editor input[type="text"] {
+    flex-grow: 1;
+    min-width: 0;
+    padding: 0.5rem;
+    font-size: 0.95rem;
+    border-radius: 0.5rem;
+}
+.spell-upcast-editor label {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.4rem;
+}
+.spell-upcast-editor textarea {
+    height: 70px;
+}
+
+/* --- Spell card preview --- */
+.spell-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1mm;
+    margin: 1.4mm;
+    margin-top: 0;
+    justify-content: center;
+}
+.spell-level-badge,
+.spell-element-badge,
+.spell-utility-badge {
+    background-color: gainsboro;
+    padding: 0.4mm 1.4mm;
+    border-radius: 1.6mm;
+    font-size: 3mm;
+    font-weight: bold;
+}
+.spell-utility-badge {
+    background-color: #fff8d8;
+    border: 0.3mm solid #c8a500;
+}
+.spell-utility-badge.empty {
+    display: none;
+}
+
+.spell-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6mm;
+    width: 100%;
+    font-size: 3mm;
+    text-align: left;
+    padding: 0.4mm 0;
+}
+.spell-stat-line {
+    overflow-wrap: anywhere;
+}
+.spell-stat-line .spell-stat-label {
+    margin-right: 0.4em;
+}
+.spell-stat-line.empty {
+    display: none;
+}
+.spell-conc {
+    background-color: gainsboro;
+    padding: 0.4mm 1mm;
+    border-radius: 1mm;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 0.4mm;
+}
+.spell-conc.empty {
+    display: none;
+}
+
+.card-upcast {
+    margin: 1.4mm;
+    margin-top: 0;
+    padding: 1.4mm;
+    background-color: gainsboro;
+    border-radius: 1.4mm;
+    font-size: 3mm;
+    overflow-wrap: break-word;
+}
+.card-upcast.empty {
+    display: none;
+}
+.card-upcast .card-upcast-label {
+    margin-right: 0.3em;
+}
+.card-upcast .card-upcast-value > * {
+    display: inline;
+}
+
+/* When image is on for a spell card, give the spell-stats a bit more room */
+.card-short-description.no-image > .characteristics > .spell-stats {
+    display: flex;
+}
+
+/* --- Element styles (spell cards only) --- */
+.card-container[data-card-type="spell"].element-aucun {
+    background: radial-gradient(circle, hsl(0, 0%, 88%), hsl(0, 0%, 55%));
+}
+.card-container[data-card-type="spell"].element-feu {
+    background: radial-gradient(circle, hsl(15, 95%, 75%), hsl(0, 80%, 45%));
+}
+.card-container[data-card-type="spell"].element-glace {
+    background: radial-gradient(circle, hsl(195, 90%, 82%), hsl(210, 85%, 55%));
+}
+.card-container[data-card-type="spell"].element-foudre {
+    background: radial-gradient(circle, hsl(50, 100%, 78%), hsl(40, 95%, 50%));
+}
+.card-container[data-card-type="spell"].element-vent {
+    background: radial-gradient(circle, hsl(160, 50%, 82%), hsl(160, 40%, 50%));
+}
+.card-container[data-card-type="spell"].element-radiant {
+    background: radial-gradient(circle, hsl(50, 100%, 85%), hsl(45, 100%, 60%));
+}
+.card-container[data-card-type="spell"].element-necrotique {
+    background: radial-gradient(circle, hsl(290, 35%, 60%), hsl(285, 50%, 25%));
 }

@@ -17,7 +17,6 @@
                 </span>
                 <select id="language-select">
                     <option value="english">English</option>
-                    <option value="russian">Русский</option>
                     <option value="french" selected>Français</option>
                 </select>
             </label>
@@ -34,6 +33,16 @@
             <button id="clear-button" class="pretty-button not-printable">
                 <span id="clear-button-content" class="material-symbols-outlined">delete_sweep</span>
             </button>
+
+            <div id="page-count-control" class="not-printable" title="Pages">
+                <button id="page-count-decrement" class="pretty-button" type="button" aria-label="Remove page">
+                    <span class="material-symbols-outlined">remove</span>
+                </button>
+                <span id="page-count-display">1</span>
+                <button id="page-count-increment" class="pretty-button" type="button" aria-label="Add page">
+                    <span class="material-symbols-outlined">add</span>
+                </button>
+            </div>
 
             <button id="toggle-preview-button" class="pretty-button material-symbols-outlined">
                 <!-- <span id="toggle-preview-button-content">Toggle Preview</span> -->
