@@ -580,7 +580,7 @@
                     <div id="card-image-value-${i}" class="image">
                     </div>
                     <div class="characteristics">
-                        <div id="card-type-${i}" class="card-type item-only-card">
+                        <div id="card-type-preview-${i}" class="card-type item-only-card">
                             <div id="card-type-header-${i}" class="item-type-header">
                                 ${translation[currentLanguage]["type"]}
                             </div>
@@ -874,7 +874,7 @@
 
     function toggle_type(element) {
         const item_number = get_item_number(element);
-        const card_type = document.getElementById(`card-type-${item_number}`);
+        const card_type = document.getElementById(`card-type-preview-${item_number}`);
         // card_short_description was not defined in original, but used. Added const.
         const card_short_description = document.getElementById(
             `card-short-description-${item_number}`

@@ -90,6 +90,12 @@ main {
 		border: none !important;
 		background: transparent !important;
 	}
+	/* Force-hide every descendant too: some children (e.g. the preview type
+	   block) carry an inline visibility:visible that would otherwise bleed
+	   through the hidden parent. !important beats the inline style. */
+	.card-container.card-empty * {
+		visibility: hidden !important;
+	}
 }
 
 .editor-container {
@@ -714,6 +720,9 @@ main.no-preview > .A4-container {
     margin-top: 0;
     justify-content: center;
 }
+.spell-badges {
+    align-items: center;
+}
 .spell-level-badge,
 .spell-element-badge,
 .spell-utility-badge {
@@ -722,10 +731,13 @@ main.no-preview > .A4-container {
     border-radius: 1.6mm;
     font-size: 3mm;
     font-weight: bold;
+    /* Reserve the same border thickness on every badge so the text stays
+       vertically aligned (the utility badge just recolours its border). */
+    border: 0.3mm solid transparent;
 }
 .spell-utility-badge {
     background-color: #fff8d8;
-    border: 0.3mm solid #c8a500;
+    border-color: #c8a500;
 }
 .spell-utility-badge.empty {
     display: none;
