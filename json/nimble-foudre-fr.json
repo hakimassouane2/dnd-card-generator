@@ -8,7 +8,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "Lançable uniquement si vous êtes Surchargé, mettant fin à l'état. Allonge : 2. aux autres créatures à Allonge. Niveaux supérieurs : +4 dégâts tous les 5 niveaux.",
+    "details": "Lançable uniquement si vous êtes Surchargé, mettant fin à l'état. Allonge : 2. aux autres créatures à Allonge.",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "foudre",
@@ -19,7 +19,7 @@
     "spellDamageType": "",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+4 dégâts tous les 5 niveaux."
   },
   {
     "cardType": "spell",
@@ -30,7 +30,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "En cas d'échec : la foudre ne trouve pas le sol et vous frappe à la place. Niveaux supérieurs : +6 dégâts tous les 5 niveaux.",
+    "details": "En cas d'échec : la foudre ne trouve pas le sol et vous frappe à la place.",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "foudre",
@@ -41,7 +41,7 @@
     "spellDamageType": "",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+6 dégâts tous les 5 niveaux."
   },
   {
     "cardType": "spell",

@@ -8,7 +8,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "Donnez une action supplémentaire à un allié à portée. Dépensez 1 mana pour lancer ce sort quand ce n'est pas votre tour. Niveaux supérieurs : +1 Portée tous les 5 niveaux.",
+    "details": "Donnez une action supplémentaire à un allié à portée. Dépensez 1 mana pour lancer ce sort quand ce n'est pas votre tour.",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "feu",
@@ -19,7 +19,7 @@
     "spellDamageType": "",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+1 Portée tous les 5 niveaux."
   },
   {
     "cardType": "spell",
@@ -30,7 +30,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "En cas de crit. : Incandescent. Niveaux supérieurs : +5 dégâts tous les 5 niveaux.",
+    "details": "En cas de crit. : Incandescent.",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "feu",
@@ -41,7 +41,7 @@
     "spellDamageType": "",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+5 dégâts tous les 5 niveaux."
   },
   {
     "cardType": "spell",
@@ -272,7 +272,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "En cas d'attaque réussie : Aveuglé jusqu'à la fin de son prochain tour. Niveaux supérieurs : +3 dégâts tous les 5 niveaux.",
+    "details": "En cas d'attaque réussie : Aveuglé jusqu'à la fin de son prochain tour.",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "glace",
@@ -283,7 +283,7 @@
     "spellDamageType": "",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+3 dégâts tous les 5 niveaux."
   },
   {
     "cardType": "spell",
@@ -294,7 +294,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "En cas d'attaque réussie : Ralenti. Niveaux supérieurs : +3 dégâts tous les 5 niveaux.",
+    "details": "En cas d'attaque réussie : Ralenti.",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "glace",
@@ -305,7 +305,7 @@
     "spellDamageType": "Froid",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+3 dégâts tous les 5 niveaux."
   },
   {
     "cardType": "spell",
@@ -536,7 +536,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "Lançable uniquement si vous êtes Surchargé, mettant fin à l'état. Allonge : 2. aux autres créatures à Allonge. Niveaux supérieurs : +4 dégâts tous les 5 niveaux.",
+    "details": "Lançable uniquement si vous êtes Surchargé, mettant fin à l'état. Allonge : 2. aux autres créatures à Allonge.",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "foudre",
@@ -547,7 +547,7 @@
     "spellDamageType": "",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+4 dégâts tous les 5 niveaux."
   },
   {
     "cardType": "spell",
@@ -558,7 +558,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "En cas d'échec : la foudre ne trouve pas le sol et vous frappe à la place. Niveaux supérieurs : +6 dégâts tous les 5 niveaux.",
+    "details": "En cas d'échec : la foudre ne trouve pas le sol et vous frappe à la place.",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "foudre",
@@ -569,7 +569,7 @@
     "spellDamageType": "",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+6 dégâts tous les 5 niveaux."
   },
   {
     "cardType": "spell",
@@ -800,7 +800,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "(Vicieux : lancez 1 dé supplémentaire chaque fois que vous lancez des dégâts de crit.). Touche aussi jusqu'à 1 cible adjacente. Niveaux supérieurs : +2 dégâts tous les 5 niveaux.",
+    "details": "(Vicieux : lancez 1 dé supplémentaire chaque fois que vous lancez des dégâts de crit.). Touche aussi jusqu'à 1 cible adjacente.",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "vent",
@@ -811,7 +811,7 @@
     "spellDamageType": "Tranchant",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+2 dégâts tous les 5 niveaux."
   },
   {
     "cardType": "spell",
@@ -822,7 +822,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "(ignore l'armure). En cas d'attaque réussie : la cible est Provoquée pendant son prochain tour. Niveaux supérieurs : +2 dégâts tous les 5 niveaux. — Réservé : Barde.",
+    "details": "(ignore l'armure). En cas d'attaque réussie : la cible est Provoquée pendant son prochain tour. — Réservé : Songweaver.",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "vent",
@@ -833,7 +833,7 @@
     "spellDamageType": "Psychique",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+2 dégâts tous les 5 niveaux."
   },
   {
     "cardType": "spell",
@@ -844,7 +844,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "Rendez 1 PV à une créature Mourante. Niveaux supérieurs : +2 Portée tous les 5 niveaux.",
+    "details": "Rendez 1 PV à une créature Mourante.",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "vent",
@@ -855,7 +855,7 @@
     "spellDamageType": "",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+2 Portée tous les 5 niveaux."
   },
   {
     "cardType": "spell",
@@ -1086,7 +1086,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "Donnez à une créature l'avantage sur sa prochaine attaque (jusqu'à la fin de son prochain tour). Niveaux supérieurs : +1 Allonge tous les 5 niveaux.",
+    "details": "Donnez à une créature l'avantage sur sa prochaine attaque (jusqu'à la fin de son prochain tour)",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "radiant",
@@ -1097,7 +1097,7 @@
     "spellDamageType": "",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+1 Allonge tous les 5 niveaux."
   },
   {
     "cardType": "spell",
@@ -1108,7 +1108,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "(ignore l'armure), ne peut pas échouer. Dégâts x2 contre les morts-vivants ou les lâches (ceux qui sont Effrayés ou à l'abri). Niveaux supérieurs : +2 dégâts tous les 5 niveaux.",
+    "details": "(ignore l'armure), ne peut pas échouer. Dégâts x2 contre les morts-vivants ou les lâches (ceux qui sont Effrayés ou à l'abri)",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "radiant",
@@ -1119,7 +1119,7 @@
     "spellDamageType": "",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+2 dégâts tous les 5 niveaux."
   },
   {
     "cardType": "spell",
@@ -1372,7 +1372,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "(ignore l'armure). En cas d'attaque réussie : la cible se rapproche de 2 cases de vous. Niveaux supérieurs : incrémentez la taille du dé d'un cran tous les 5 niveaux (d6 » d8 » d10 » d12)",
+    "details": "(ignore l'armure). En cas d'attaque réussie : la cible se rapproche de 2 cases de vous.",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "necrotique",
@@ -1383,7 +1383,7 @@
     "spellDamageType": "",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "incrémentez la taille du dé d'un cran tous les 5 niveaux (d6 » d8 » d10 » d12)."
   },
   {
     "cardType": "spell",
@@ -1394,7 +1394,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "1/ronde. Niveaux supérieurs : +1d12 tous les 5 niveaux. — Réservé : Occultiste.",
+    "details": "1/ronde. — Réservé : Shadowmancer.",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "necrotique",
@@ -1405,7 +1405,7 @@
     "spellDamageType": "",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+1d12 tous les 5 niveaux."
   },
   {
     "cardType": "spell",
@@ -1416,7 +1416,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "Invoquez un sbire d'ombre à Allonge 1 (vous pouvez invoquer ainsi un maximum de sbires égal à INT ou NIV, selon le plus bas). Vos sbires d'ombre suivent les règles normales des sbires : ils ont 1 PV, aucun bonus aux dégâts, et ne font pas de crit. Ils vous abandonnent immédiatement hors combat. Action : (1/tour) vous pouvez ordonner à TOUS vos sbires de se déplacer de 6 puis d'attaquer (Allonge 1, d12 chacun). Niveaux supérieurs : +1 Allonge tous les 5 niveaux. — Réservé : Occultiste.",
+    "details": "Invoquez un sbire d'ombre à Allonge 1 (vous pouvez invoquer ainsi un maximum de sbires égal à INT ou NIV, selon le plus bas). Vos sbires d'ombre suivent les règles normales des sbires : ils ont 1 PV, aucun bonus aux dégâts, et ne font pas de crit. Ils vous abandonnent immédiatement hors combat. Action : (1/tour) vous pouvez ordonner à TOUS vos sbires de se déplacer de 6 puis d'attaquer (Allonge 1, d12 chacun) — Réservé : Shadowmancer.",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "necrotique",
@@ -1427,7 +1427,7 @@
     "spellDamageType": "",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+1 Allonge tous les 5 niveaux."
   },
   {
     "cardType": "spell",
@@ -1438,7 +1438,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "En cas d'attaque réussie : la cible est considérée comme un mort-vivant pendant 1 ronde. Niveaux supérieurs : +6 dégâts tous les 5 niveaux.",
+    "details": "En cas d'attaque réussie : la cible est considérée comme un mort-vivant pendant 1 ronde.",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "necrotique",
@@ -1449,7 +1449,7 @@
     "spellDamageType": "",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+6 dégâts tous les 5 niveaux."
   },
   {
     "cardType": "spell",

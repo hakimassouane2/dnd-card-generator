@@ -73,6 +73,7 @@
 		duration: "Duration",
 		duration_placeholder: "e.g. 10 min",
 		upcast: "At higher tiers",
+		upcast_cantrip: "At higher levels",
 		upcast_placeholder: "Effect at higher tiers (markdown)",
 	},
 	french: {
@@ -130,6 +131,7 @@
 		duration: "Durée",
 		duration_placeholder: "ex. 10 min",
 		upcast: "Aux rangs supérieurs",
+		upcast_cantrip: "Aux niveaux supérieurs",
 		upcast_placeholder: "Effet aux rangs supérieurs (markdown)",
 	},
 };
@@ -971,6 +973,13 @@
         badge.innerHTML = value === "cantrip"
             ? translation[currentLanguage]["level_cantrip"]
             : `${translation[currentLanguage]["tier_label"]} ${value.substring(1)}`; // t3 -> Rang 3
+        // Cantrips scale "at higher levels", tiered spells "at higher tiers":
+        // adapt the upcast block label so cantrip High-Levels sit in the same place.
+        const upcastLabel = document.querySelector(`#card-upcast-${item_number} .card-upcast-label`);
+        if (upcastLabel) {
+            const key = value === "cantrip" ? "upcast_cantrip" : "upcast";
+            upcastLabel.textContent = translation[currentLanguage][key] + ":";
+        }
         fit_text();
     }
 
@@ -1111,7 +1120,7 @@
         const upcastNode = document.getElementById(`card-upcast-${item_number}`);
         if (upcastNode) {
             const labelEl = upcastNode.querySelector('.card-upcast-label');
-            if (labelEl) labelEl.textContent = t["upcast"] + ":";
+            if (labelEl) labelEl.textContent = (levelSelect.value === "cantrip" ? t["upcast_cantrip"] : t["upcast"]) + ":";
         }
 
         change_spell_level(levelSelect);

@@ -8,7 +8,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "Donnez à une créature l'avantage sur sa prochaine attaque (jusqu'à la fin de son prochain tour). Niveaux supérieurs : +1 Allonge tous les 5 niveaux.",
+    "details": "Donnez à une créature l'avantage sur sa prochaine attaque (jusqu'à la fin de son prochain tour)",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "radiant",
@@ -19,7 +19,7 @@
     "spellDamageType": "",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+1 Allonge tous les 5 niveaux."
   },
   {
     "cardType": "spell",
@@ -30,7 +30,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "(ignore l'armure), ne peut pas échouer. Dégâts x2 contre les morts-vivants ou les lâches (ceux qui sont Effrayés ou à l'abri). Niveaux supérieurs : +2 dégâts tous les 5 niveaux.",
+    "details": "(ignore l'armure), ne peut pas échouer. Dégâts x2 contre les morts-vivants ou les lâches (ceux qui sont Effrayés ou à l'abri)",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "radiant",
@@ -41,7 +41,7 @@
     "spellDamageType": "",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+2 dégâts tous les 5 niveaux."
   },
   {
     "cardType": "spell",

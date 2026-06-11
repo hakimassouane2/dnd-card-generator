@@ -8,7 +8,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "En cas d'attaque réussie : Aveuglé jusqu'à la fin de son prochain tour. Niveaux supérieurs : +3 dégâts tous les 5 niveaux.",
+    "details": "En cas d'attaque réussie : Aveuglé jusqu'à la fin de son prochain tour.",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "glace",
@@ -19,7 +19,7 @@
     "spellDamageType": "",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+3 dégâts tous les 5 niveaux."
   },
   {
     "cardType": "spell",
@@ -30,7 +30,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "En cas d'attaque réussie : Ralenti. Niveaux supérieurs : +3 dégâts tous les 5 niveaux.",
+    "details": "En cas d'attaque réussie : Ralenti.",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "glace",
@@ -41,7 +41,7 @@
     "spellDamageType": "Froid",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+3 dégâts tous les 5 niveaux."
   },
   {
     "cardType": "spell",

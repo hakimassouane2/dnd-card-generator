@@ -8,7 +8,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "(ignore l'armure). En cas d'attaque réussie : la cible se rapproche de 2 cases de vous. Niveaux supérieurs : incrémentez la taille du dé d'un cran tous les 5 niveaux (d6 » d8 » d10 » d12)",
+    "details": "(ignore l'armure). En cas d'attaque réussie : la cible se rapproche de 2 cases de vous.",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "necrotique",
@@ -19,7 +19,7 @@
     "spellDamageType": "",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "incrémentez la taille du dé d'un cran tous les 5 niveaux (d6 » d8 » d10 » d12)."
   },
   {
     "cardType": "spell",
@@ -30,7 +30,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "1/ronde. Niveaux supérieurs : +1d12 tous les 5 niveaux. — Réservé : Occultiste.",
+    "details": "1/ronde. — Réservé : Shadowmancer.",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "necrotique",
@@ -41,7 +41,7 @@
     "spellDamageType": "",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+1d12 tous les 5 niveaux."
   },
   {
     "cardType": "spell",
@@ -52,7 +52,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "Invoquez un sbire d'ombre à Allonge 1 (vous pouvez invoquer ainsi un maximum de sbires égal à INT ou NIV, selon le plus bas). Vos sbires d'ombre suivent les règles normales des sbires : ils ont 1 PV, aucun bonus aux dégâts, et ne font pas de crit. Ils vous abandonnent immédiatement hors combat. Action : (1/tour) vous pouvez ordonner à TOUS vos sbires de se déplacer de 6 puis d'attaquer (Allonge 1, d12 chacun). Niveaux supérieurs : +1 Allonge tous les 5 niveaux. — Réservé : Occultiste.",
+    "details": "Invoquez un sbire d'ombre à Allonge 1 (vous pouvez invoquer ainsi un maximum de sbires égal à INT ou NIV, selon le plus bas). Vos sbires d'ombre suivent les règles normales des sbires : ils ont 1 PV, aucun bonus aux dégâts, et ne font pas de crit. Ils vous abandonnent immédiatement hors combat. Action : (1/tour) vous pouvez ordonner à TOUS vos sbires de se déplacer de 6 puis d'attaquer (Allonge 1, d12 chacun) — Réservé : Shadowmancer.",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "necrotique",
@@ -63,7 +63,7 @@
     "spellDamageType": "",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+1 Allonge tous les 5 niveaux."
   },
   {
     "cardType": "spell",
@@ -74,7 +74,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "En cas d'attaque réussie : la cible est considérée comme un mort-vivant pendant 1 ronde. Niveaux supérieurs : +6 dégâts tous les 5 niveaux.",
+    "details": "En cas d'attaque réussie : la cible est considérée comme un mort-vivant pendant 1 ronde.",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "necrotique",
@@ -85,7 +85,7 @@
     "spellDamageType": "",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+6 dégâts tous les 5 niveaux."
   },
   {
     "cardType": "spell",

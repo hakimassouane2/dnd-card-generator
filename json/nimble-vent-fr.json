@@ -8,7 +8,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "(Vicieux : lancez 1 dé supplémentaire chaque fois que vous lancez des dégâts de crit.). Touche aussi jusqu'à 1 cible adjacente. Niveaux supérieurs : +2 dégâts tous les 5 niveaux.",
+    "details": "(Vicieux : lancez 1 dé supplémentaire chaque fois que vous lancez des dégâts de crit.). Touche aussi jusqu'à 1 cible adjacente.",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "vent",
@@ -19,7 +19,7 @@
     "spellDamageType": "Tranchant",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+2 dégâts tous les 5 niveaux."
   },
   {
     "cardType": "spell",
@@ -30,7 +30,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "(ignore l'armure). En cas d'attaque réussie : la cible est Provoquée pendant son prochain tour. Niveaux supérieurs : +2 dégâts tous les 5 niveaux. — Réservé : Barde.",
+    "details": "(ignore l'armure). En cas d'attaque réussie : la cible est Provoquée pendant son prochain tour. — Réservé : Songweaver.",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "vent",
@@ -41,7 +41,7 @@
     "spellDamageType": "Psychique",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+2 dégâts tous les 5 niveaux."
   },
   {
     "cardType": "spell",
@@ -52,7 +52,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "Rendez 1 PV à une créature Mourante. Niveaux supérieurs : +2 Portée tous les 5 niveaux.",
+    "details": "Rendez 1 PV à une créature Mourante.",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "vent",
@@ -63,7 +63,7 @@
     "spellDamageType": "",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+2 Portée tous les 5 niveaux."
   },
   {
     "cardType": "spell",

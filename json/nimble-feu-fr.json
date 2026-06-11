@@ -8,7 +8,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "Donnez une action supplémentaire à un allié à portée. Dépensez 1 mana pour lancer ce sort quand ce n'est pas votre tour. Niveaux supérieurs : +1 Portée tous les 5 niveaux.",
+    "details": "Donnez une action supplémentaire à un allié à portée. Dépensez 1 mana pour lancer ce sort quand ce n'est pas votre tour.",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "feu",
@@ -19,7 +19,7 @@
     "spellDamageType": "",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+1 Portée tous les 5 niveaux."
   },
   {
     "cardType": "spell",
@@ -30,7 +30,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "En cas de crit. : Incandescent. Niveaux supérieurs : +5 dégâts tous les 5 niveaux.",
+    "details": "En cas de crit. : Incandescent.",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "feu",
@@ -41,7 +41,7 @@
     "spellDamageType": "",
     "spellDuration": "",
     "spellConcentration": false,
-    "spellUpcast": ""
+    "spellUpcast": "+5 dégâts tous les 5 niveaux."
   },
   {
     "cardType": "spell",
