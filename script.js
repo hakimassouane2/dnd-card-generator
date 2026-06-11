@@ -117,7 +117,7 @@
 		level_cantrip: "Tour de magie",
 		tier_label: "Rang",
 		casting_time: "Temps d'incantation",
-		casting_time_short: "Temps",
+		casting_time_short: "Incantation",
 		casting_time_placeholder: "ex. 1 action",
 		range: "Portée",
 		range_placeholder: "ex. Portée 12 / Allonge 1",
@@ -1006,7 +1006,21 @@
         const map = { castingTime: 'castingtime', range: 'range', duration: 'duration' };
         const node = document.getElementById(`card-spell-${map[statKey]}-${item_number}`);
         const valueSpan = node.querySelector('.spell-stat-value');
-        const value = element.value.trim();
+        let value = element.value.trim();
+
+        // Range/Reach line: use the leading keyword (Portée/Allonge/Ligne…) as the
+        // line's label instead of a hard-coded "Portée:", so we don't get
+        // "Portée: Allonge 12". The rest of the field becomes the value.
+        if (statKey === 'range') {
+            const labelEl = node.querySelector('.spell-stat-label');
+            const m = value.match(/^(Portée|Allonge|Ligne|Range|Reach|Line)\b\s*:?\s*/i);
+            if (m) {
+                if (labelEl) labelEl.textContent = m[1] + ":";
+                value = value.slice(m[0].length).trim();
+            } else if (labelEl) {
+                labelEl.textContent = translation[currentLanguage]["range"] + ":";
+            }
+        }
         valueSpan.textContent = value ? "​" + value : "";
         node.classList.toggle('empty', !value);
         fit_text();
@@ -1446,5 +1460,4 @@
     window.addEventListener("load", (event) => {
         fit_text();
     });
-
 })(); // End of IIFE

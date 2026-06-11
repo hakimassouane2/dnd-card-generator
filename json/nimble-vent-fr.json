@@ -30,7 +30,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "(ignore l'armure). En cas d'attaque réussie : la cible est Provoquée pendant son prochain tour. Niveaux supérieurs : +2 dégâts tous les 5 niveaux. — Réservé : Songweaver.",
+    "details": "(ignore l'armure). En cas d'attaque réussie : la cible est Provoquée pendant son prochain tour. Niveaux supérieurs : +2 dégâts tous les 5 niveaux. — Réservé : Barde.",
     "charges": "0",
     "spellLevel": "cantrip",
     "spellElement": "vent",
