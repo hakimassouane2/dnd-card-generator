@@ -56,6 +56,8 @@
 		element_necrotique: "Necrotic",
 		utility: "Utility",
 		utility_short: "Util.",
+		aoe: "AoE",
+		aoe_short: "AoE",
 		level: "Tier",
 		level_cantrip: "Cantrip",
 		tier_label: "Tier",
@@ -114,6 +116,8 @@
 		element_necrotique: "Nécrotique",
 		utility: "Utilitaire",
 		utility_short: "Util.",
+		aoe: "Zone",
+		aoe_short: "Zone",
 		level: "Niveau",
 		level_cantrip: "Tour de magie",
 		tier_label: "Rang",
@@ -332,6 +336,9 @@
         document.querySelectorAll(".spell-utility-editor > label > span").forEach(el => {
             el.innerHTML = t["utility"];
         });
+        document.querySelectorAll(".spell-aoe-editor > label > span").forEach(el => {
+            el.innerHTML = t["aoe"];
+        });
         document.querySelectorAll(".spell-casting-time-editor > label > span").forEach(el => {
             el.innerHTML = t["casting_time"];
         });
@@ -473,6 +480,13 @@
                     </label>
                 </div>
 
+                <div class="spell-aoe-editor spell-only">
+                    <label>
+                        <input id="spell-aoe-${i}" type="checkbox">
+                        <span>${translation[currentLanguage]["aoe"]}</span>
+                    </label>
+                </div>
+
                 <div class="item-short-description-editor">
                     <label>
                         <input id="item-short-description-${i}" class="item-short-description" type="checkbox" checked>
@@ -576,6 +590,7 @@
                     <span id="card-spell-level-${i}" class="spell-level-badge">${translation[currentLanguage]["level_cantrip"]}</span>
                     <span id="card-spell-element-${i}" class="spell-element-badge element-aucun">${translation[currentLanguage]["element_aucun"]}</span>
                     <span id="card-spell-utility-${i}" class="spell-utility-badge empty">${translation[currentLanguage]["utility"]}</span>
+                    <span id="card-spell-aoe-${i}" class="spell-aoe-badge empty">${translation[currentLanguage]["aoe"]}</span>
                 </div>
 
                 <div id="card-short-description-${i}" class="card-short-description">
@@ -754,6 +769,7 @@
         const spellLevelSelect = document.getElementById(`spell-level-${i}`);
         const spellElementSelect = document.getElementById(`spell-element-${i}`);
         const spellUtilityCheckbox = document.getElementById(`spell-utility-${i}`);
+        const spellAoeCheckbox = document.getElementById(`spell-aoe-${i}`);
         const spellCastingTimeInput = document.getElementById(`spell-casting-time-${i}`);
         const spellRangeInput = document.getElementById(`spell-range-${i}`);
         const spellDamageInput = document.getElementById(`spell-damage-${i}`);
@@ -777,6 +793,7 @@
         spellLevelSelect.addEventListener('change', (event) => change_spell_level(event.target));
         spellElementSelect.addEventListener('change', (event) => change_spell_element(event.target));
         spellUtilityCheckbox.addEventListener('change', (event) => change_spell_utility(event.target));
+        spellAoeCheckbox.addEventListener('change', (event) => change_spell_aoe(event.target));
         spellCastingTimeInput.addEventListener('keyup', (event) => change_spell_stat(event.target, 'castingTime'));
         spellRangeInput.addEventListener('keyup', (event) => change_spell_stat(event.target, 'range'));
         spellDamageInput.addEventListener('keyup', (event) => change_spell_damage_or_type(event.target));
@@ -1010,6 +1027,17 @@
         fit_text();
     }
 
+    function change_spell_aoe(element) {
+        const item_number = get_item_number(element);
+        const badge = document.getElementById(`card-spell-aoe-${item_number}`);
+        if (element.checked) {
+            badge.classList.remove('empty');
+        } else {
+            badge.classList.add('empty');
+        }
+        fit_text();
+    }
+
     function change_spell_stat(element, statKey) {
         const item_number = get_item_number(element);
         const map = { castingTime: 'castingtime', range: 'range', duration: 'duration' };
@@ -1092,6 +1120,7 @@
         const levelSelect = document.getElementById(`spell-level-${item_number}`);
         const elementSelect = document.getElementById(`spell-element-${item_number}`);
         const utilityCheckbox = document.getElementById(`spell-utility-${item_number}`);
+        const aoeCheckbox = document.getElementById(`spell-aoe-${item_number}`);
         const castingTimeInput = document.getElementById(`spell-casting-time-${item_number}`);
         const rangeInput = document.getElementById(`spell-range-${item_number}`);
         const durationInput = document.getElementById(`spell-duration-${item_number}`);
@@ -1117,6 +1146,10 @@
         });
         const concNode = document.getElementById(`card-spell-concentration-${item_number}`);
         if (concNode) concNode.innerHTML = `★ ${t["concentration"]}`;
+        const utilityBadge = document.getElementById(`card-spell-utility-${item_number}`);
+        if (utilityBadge) utilityBadge.textContent = t["utility"];
+        const aoeBadge = document.getElementById(`card-spell-aoe-${item_number}`);
+        if (aoeBadge) aoeBadge.textContent = t["aoe"];
         const upcastNode = document.getElementById(`card-upcast-${item_number}`);
         if (upcastNode) {
             const labelEl = upcastNode.querySelector('.card-upcast-label');
@@ -1126,6 +1159,7 @@
         change_spell_level(levelSelect);
         change_spell_element(elementSelect);
         change_spell_utility(utilityCheckbox);
+        change_spell_aoe(aoeCheckbox);
         change_spell_stat(castingTimeInput, 'castingTime');
         change_spell_stat(rangeInput, 'range');
         change_spell_stat(durationInput, 'duration');
@@ -1154,6 +1188,7 @@
                 spellLevel: document.getElementById(`spell-level-${i}`).value,
                 spellElement: document.getElementById(`spell-element-${i}`).value,
                 spellUtility: document.getElementById(`spell-utility-${i}`).checked,
+                spellAoe: document.getElementById(`spell-aoe-${i}`).checked,
                 spellCastingTime: document.getElementById(`spell-casting-time-${i}`).value,
                 spellRange: document.getElementById(`spell-range-${i}`).value,
                 spellDamage: document.getElementById(`spell-damage-${i}`).value,
@@ -1232,6 +1267,7 @@
             spellLevel: 'cantrip',
             spellElement: 'aucun',
             spellUtility: false,
+            spellAoe: false,
             spellCastingTime: '',
             spellRange: '',
             spellDamage: '',
@@ -1249,7 +1285,7 @@
         return !!(c.name || c.details || c.typeValue || hasImage
             || c.spellCastingTime || c.spellRange || c.spellDamage || c.spellDamageType
             || c.spellDuration || c.spellUpcast
-            || c.spellConcentration || c.spellUtility
+            || c.spellConcentration || c.spellUtility || c.spellAoe
             || (c.charges && c.charges !== '0'));
     }
 
@@ -1313,6 +1349,7 @@
             const spellLevelSelect = document.getElementById(`spell-level-${i}`);
             const spellElementSelect = document.getElementById(`spell-element-${i}`);
             const spellUtilityCheckbox = document.getElementById(`spell-utility-${i}`);
+            const spellAoeCheckbox = document.getElementById(`spell-aoe-${i}`);
             const spellCastingTimeInput = document.getElementById(`spell-casting-time-${i}`);
             const spellRangeInput = document.getElementById(`spell-range-${i}`);
             const spellDamageInput = document.getElementById(`spell-damage-${i}`);
@@ -1335,6 +1372,7 @@
             spellLevelSelect.value = cardData.spellLevel || 'cantrip';
             spellElementSelect.value = cardData.spellElement || 'aucun';
             spellUtilityCheckbox.checked = !!cardData.spellUtility;
+            spellAoeCheckbox.checked = !!cardData.spellAoe;
             spellCastingTimeInput.value = cardData.spellCastingTime || '';
             spellRangeInput.value = cardData.spellRange || '';
             spellDamageInput.value = cardData.spellDamage || '';
@@ -1345,7 +1383,7 @@
 
             // Trigger all update functions to refresh the card previews
             [cardTypeSelect, raritySelect, shortDescCheckbox, imageReqCheckbox, typeReqCheckbox,
-             spellLevelSelect, spellElementSelect, spellUtilityCheckbox, spellConcentrationCheckbox]
+             spellLevelSelect, spellElementSelect, spellUtilityCheckbox, spellAoeCheckbox, spellConcentrationCheckbox]
                 .forEach(el => el.dispatchEvent(new Event('change', { bubbles: true })));
             [nameInput, typeValueInput, detailsTextarea,
              spellCastingTimeInput, spellRangeInput, spellDamageInput, spellDamageTypeInput,
@@ -1401,9 +1439,10 @@
                 const upcast = document.getElementById(`spell-upcast-${i}`).value.trim();
                 const concentration = document.getElementById(`spell-concentration-${i}`).checked;
                 const utility = document.getElementById(`spell-utility-${i}`).checked;
+                const aoe = document.getElementById(`spell-aoe-${i}`).checked;
                 isEmpty = !name && !details && !hasImage
                     && !castingTime && !range && !damage && !damageType && !duration && !upcast
-                    && !concentration && !utility;
+                    && !concentration && !utility && !aoe;
             } else {
                 const typeValue = document.getElementById(`item-type-value-${i}`).value.trim();
                 const charges = document.getElementById(`item-charges-${i}`).value;
