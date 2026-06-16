@@ -123,7 +123,7 @@
     "imageDataUrl": "",
     "typeRequired": false,
     "typeValue": "",
-    "details": "Les autres créatures dans l'Allonge subissent 2d20+10 dégâts (ignore l'armure) en cas d'échec à un Jet de sauvegarde de Dextérité. Moitié des dégâts en cas de réussite. Les créatures **Incandescentes** échouent automatiquement.",
+    "details": "Les autres créatures dans l'Allonge subissent 2d20+10 dégâts (ignore l'armure) en cas d'échec à un JdS DEX. Moitié des dégâts en cas de réussite. Les créatures **Incandescentes** échouent automatiquement.",
     "charges": "0",
     "spellLevel": "t4",
     "spellElement": "feu",
