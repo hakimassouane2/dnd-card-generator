@@ -645,14 +645,137 @@ main.no-preview > .A4-container {
     background: radial-gradient(circle, hsl(355, 78%, 76%), hsl(355, 78%, 46%));
 }
 
-/* --- Card-type visibility toggle --- */
-.item-editor[data-card-type="spell"] .item-only,
-.card-container[data-card-type="spell"] .item-only-card {
+/* --- Card-type visibility toggle ---
+   Each *-only block is shown only on its own card type, so adding a new type
+   (e.g. class features) never needs a new rule per existing type. */
+.item-editor:not([data-card-type="item"]) .item-only,
+.card-container:not([data-card-type="item"]) .item-only-card {
     display: none !important;
 }
-.item-editor[data-card-type="item"] .spell-only,
-.card-container[data-card-type="item"] .spell-only-card {
+.item-editor:not([data-card-type="spell"]) .spell-only,
+.card-container:not([data-card-type="spell"]) .spell-only-card {
     display: none !important;
+}
+.item-editor:not([data-card-type="feature"]) .feature-only,
+.card-container:not([data-card-type="feature"]) .feature-only-card {
+    display: none !important;
+}
+
+/* --- Color override editor --- */
+.color-override-editor {
+    margin-bottom: 8px;
+}
+.color-override-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+.color-override-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-grow: 1;
+    justify-content: flex-end;
+}
+.color-override-editor input.color-override-picker {
+    width: 2.5rem;
+    height: 2rem;
+    min-width: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    background: none;
+    cursor: pointer;
+}
+.color-override-editor input.color-override-value {
+    width: 8rem;
+    min-width: 0;
+    flex-grow: 0;
+    padding: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: normal;
+    border-radius: 0.5rem;
+    text-transform: lowercase;
+}
+.color-override-editor input.color-override-value.invalid {
+    outline: 2px solid #c0392b;
+}
+.color-override-reset {
+    height: 2rem;
+    min-width: 2rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    background-color: #fff;
+    cursor: pointer;
+    line-height: 1;
+}
+.color-override-reset:hover {
+    background-color: #eee;
+}
+
+/* --- Class feature editor --- */
+.feature-class-editor,
+.feature-subclass-editor,
+.feature-level-editor {
+    margin-bottom: 8px;
+}
+.feature-class-editor label,
+.feature-subclass-editor label,
+.feature-level-editor label {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+.feature-class-editor input[type="text"],
+.feature-subclass-editor input[type="text"],
+.feature-level-editor input[type="text"] {
+    flex-grow: 1;
+    min-width: 0;
+    padding: 0.5rem;
+    font-size: 0.95rem;
+    border-radius: 0.5rem;
+}
+
+/* --- Class feature card preview --- */
+.feature-badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1mm;
+    margin: 1.4mm;
+    margin-top: 0;
+}
+.feature-badges.empty {
+    display: none;
+}
+.feature-class-badge,
+.feature-subclass-badge,
+.feature-level-badge {
+    background-color: gainsboro;
+    padding: 0.4mm 1.4mm;
+    border-radius: 1.6mm;
+    font-size: 3mm;
+    font-weight: bold;
+    border: 0.3mm solid transparent;
+}
+.feature-subclass-badge {
+    font-weight: normal;
+    font-style: italic;
+}
+.feature-class-badge.empty,
+.feature-subclass-badge.empty,
+.feature-level-badge.empty {
+    display: none;
+}
+
+/* Neutral parchment tint by default; overridable per card via the color field. */
+.card-container[data-card-type="feature"] {
+    background: radial-gradient(circle, hsl(38, 45%, 88%), hsl(35, 35%, 55%));
 }
 
 /* --- Spell editor specific --- */

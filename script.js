@@ -77,6 +77,19 @@
 		upcast: "At higher tiers",
 		upcast_cantrip: "At higher levels",
 		upcast_placeholder: "Effect at higher tiers (markdown)",
+		feature_card: "Class feature",
+		feature: "Feature",
+		feature_name: "Name of the feature",
+		feature_details: "Details of the feature",
+		feature_class: "Class",
+		feature_class_placeholder: "e.g. Berserker",
+		feature_subclass: "Subclass",
+		feature_subclass_placeholder: "e.g. Path of Fury",
+		feature_level: "Level",
+		feature_level_placeholder: "e.g. 3",
+		color_override: "Border color",
+		color_override_placeholder: "#RRGGBB",
+		color_override_reset: "Reset to default color",
 	},
 	french: {
 		print: "Imprimer",
@@ -137,6 +150,19 @@
 		upcast: "Aux rangs supérieurs",
 		upcast_cantrip: "Aux niveaux supérieurs",
 		upcast_placeholder: "Effet aux rangs supérieurs (markdown)",
+		feature_card: "Aptitude de classe",
+		feature: "Aptitude",
+		feature_name: "Nom de l'aptitude",
+		feature_details: "Détails de l'aptitude",
+		feature_class: "Classe",
+		feature_class_placeholder: "ex. Berserker",
+		feature_subclass: "Sous-classe",
+		feature_subclass_placeholder: "ex. Voie de la Fureur",
+		feature_level: "Niveau",
+		feature_level_placeholder: "ex. 3",
+		color_override: "Couleur des bordures",
+		color_override_placeholder: "#RRGGBB",
+		color_override_reset: "Revenir à la couleur par défaut",
 	},
 };
 
@@ -226,16 +252,14 @@
             .querySelectorAll(".item-name-editor > input")
             .forEach((element) => {
                 const itemNum = get_item_number(element);
-                const cardType = get_card_type(itemNum);
-                element.placeholder = cardType === "spell" ? t["spell_name"] : t["item_name"];
+                element.placeholder = name_placeholder(get_card_type(itemNum));
             });
         document.querySelectorAll(".card-name").forEach((element) => {
             // Only update if it's the default placeholder, otherwise keep user input
             const itemNum = get_item_number(element);
             const itemNameInput = document.getElementById(`item-name-${itemNum}`);
-            const cardType = get_card_type(itemNum);
             if (itemNameInput.value === "") {
-                element.innerHTML = cardType === "spell" ? t["spell_name"] : t["item_name"];
+                element.innerHTML = name_placeholder(get_card_type(itemNum));
             }
         });
         document
@@ -271,8 +295,7 @@
         });
         document.querySelectorAll(".item-details-editor").forEach((element) => {
             const itemNum = get_item_number(element);
-            const cardType = get_card_type(itemNum);
-            element.placeholder = cardType === "spell" ? t["spell_details"] : t["item_details"];
+            element.placeholder = details_placeholder(get_card_type(itemNum));
         });
 
         document
@@ -307,8 +330,40 @@
         document.querySelectorAll(".card-type-editor select").forEach(select => {
             const opt_item = select.querySelector('option[value="item"]');
             const opt_spell = select.querySelector('option[value="spell"]');
+            const opt_feature = select.querySelector('option[value="feature"]');
             if (opt_item) opt_item.innerHTML = t["item_card"];
             if (opt_spell) opt_spell.innerHTML = t["spell_card"];
+            if (opt_feature) opt_feature.innerHTML = t["feature_card"];
+        });
+
+        // --- Color override + class feature labels ---
+        document.querySelectorAll(".color-override-editor .color-override-label").forEach(el => {
+            el.innerHTML = t["color_override"];
+        });
+        document.querySelectorAll(".color-override-editor input.color-override-value").forEach(el => {
+            el.placeholder = t["color_override_placeholder"];
+        });
+        document.querySelectorAll(".color-override-editor .color-override-reset").forEach(el => {
+            el.title = t["color_override_reset"];
+        });
+
+        document.querySelectorAll(".feature-class-editor > label > span").forEach(el => {
+            el.innerHTML = t["feature_class"];
+        });
+        document.querySelectorAll(".feature-class-editor input").forEach(el => {
+            el.placeholder = t["feature_class_placeholder"];
+        });
+        document.querySelectorAll(".feature-subclass-editor > label > span").forEach(el => {
+            el.innerHTML = t["feature_subclass"];
+        });
+        document.querySelectorAll(".feature-subclass-editor input").forEach(el => {
+            el.placeholder = t["feature_subclass_placeholder"];
+        });
+        document.querySelectorAll(".feature-level-editor > label > span").forEach(el => {
+            el.innerHTML = t["feature_level"];
+        });
+        document.querySelectorAll(".feature-level-editor input").forEach(el => {
+            el.placeholder = t["feature_level_placeholder"];
         });
 
         document.querySelectorAll(".spell-level-editor > label > span").forEach(el => {
@@ -379,10 +434,11 @@
             el.placeholder = t["upcast_placeholder"];
         });
 
-        // Re-render spell preview labels and current values for every card
+        // Re-render spell/feature preview labels and current values for every card
         const numItems = getCardCount();
         for (let i = 1; i <= numItems; i++) {
             refresh_spell_card(i);
+            refresh_feature_card(i);
         }
         } finally {
             suppressFitText = prevSuppress;
@@ -390,11 +446,27 @@
         fit_text();
     }
 
-    // Returns the current card type ("item" | "spell") for a given card index.
+    // Returns the current card type ("item" | "spell" | "feature") for a given card index.
     // Defensive: returns "item" if the select is missing (early init).
+    const CARD_TYPES = ["item", "spell", "feature"];
     function get_card_type(itemNumber) {
         const sel = document.getElementById(`card-type-${itemNumber}`);
-        return sel ? sel.value : "item";
+        return sel && CARD_TYPES.includes(sel.value) ? sel.value : "item";
+    }
+
+    // Name / details placeholders depend on the card type.
+    function name_placeholder(cardType) {
+        const t = translation[currentLanguage];
+        if (cardType === "spell") return t["spell_name"];
+        if (cardType === "feature") return t["feature_name"];
+        return t["item_name"];
+    }
+
+    function details_placeholder(cardType) {
+        const t = translation[currentLanguage];
+        if (cardType === "spell") return t["spell_details"];
+        if (cardType === "feature") return t["feature_details"];
+        return t["item_details"];
     }
 
     // Initial HTML generation: Build strings first, then set innerHTML once.
@@ -422,7 +494,42 @@
                         <select id="card-type-${i}">
                             <option value="item" selected>${translation[currentLanguage]["item_card"]}</option>
                             <option value="spell">${translation[currentLanguage]["spell_card"]}</option>
+                            <option value="feature">${translation[currentLanguage]["feature_card"]}</option>
                         </select>
+                    </label>
+                </div>
+
+                <div class="color-override-editor">
+                    <!-- Not a <label>: it wraps several controls, and clicking the
+                         reset button must not re-open the color picker. -->
+                    <div class="color-override-row">
+                        <span class="color-override-label">${translation[currentLanguage]["color_override"]}</span>
+                        <span class="color-override-controls">
+                            <input id="item-color-override-picker-${i}" class="color-override-picker" type="color" value="#808080">
+                            <input id="item-color-override-${i}" class="color-override-value" type="text" maxlength="7" spellcheck="false" placeholder="${translation[currentLanguage]["color_override_placeholder"]}">
+                            <button type="button" id="item-color-override-reset-${i}" class="color-override-reset" title="${translation[currentLanguage]["color_override_reset"]}">✕</button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="feature-class-editor feature-only">
+                    <label>
+                        <span>${translation[currentLanguage]["feature_class"]}</span>
+                        <input id="feature-class-${i}" type="text" placeholder="${translation[currentLanguage]["feature_class_placeholder"]}">
+                    </label>
+                </div>
+
+                <div class="feature-subclass-editor feature-only">
+                    <label>
+                        <span>${translation[currentLanguage]["feature_subclass"]}</span>
+                        <input id="feature-subclass-${i}" type="text" placeholder="${translation[currentLanguage]["feature_subclass_placeholder"]}">
+                    </label>
+                </div>
+
+                <div class="feature-level-editor feature-only">
+                    <label>
+                        <span>${translation[currentLanguage]["feature_level"]}</span>
+                        <input id="feature-level-${i}" type="text" placeholder="${translation[currentLanguage]["feature_level_placeholder"]}">
                     </label>
                 </div>
 
@@ -584,6 +691,12 @@
             <div class="card-outline">
                 <div id="card-name-${i}" class="card-name">
                     ${translation[currentLanguage]["item_name"]}
+                </div>
+
+                <div id="card-feature-badges-${i}" class="feature-badges feature-only-card empty">
+                    <span id="card-feature-class-${i}" class="feature-class-badge empty"></span>
+                    <span id="card-feature-subclass-${i}" class="feature-subclass-badge empty"></span>
+                    <span id="card-feature-level-${i}" class="feature-level-badge empty"></span>
                 </div>
 
                 <div id="card-spell-badges-${i}" class="spell-badges spell-only-card">
@@ -778,6 +891,14 @@
         const spellConcentrationCheckbox = document.getElementById(`spell-concentration-${i}`);
         const spellUpcastTextarea = document.getElementById(`spell-upcast-${i}`);
 
+        const colorOverrideInput = document.getElementById(`item-color-override-${i}`);
+        const colorOverridePicker = document.getElementById(`item-color-override-picker-${i}`);
+        const colorOverrideReset = document.getElementById(`item-color-override-reset-${i}`);
+
+        const featureClassInput = document.getElementById(`feature-class-${i}`);
+        const featureSubclassInput = document.getElementById(`feature-subclass-${i}`);
+        const featureLevelInput = document.getElementById(`feature-level-${i}`);
+
         itemEditorSummary.addEventListener('keyup', prevent_toggling);
         itemNameInput.addEventListener('keyup', (event) => change_name(event.target));
         shortDescCheckbox.addEventListener('change', (event) => toggle_short_description(event.target));
@@ -801,6 +922,19 @@
         spellDurationInput.addEventListener('keyup', (event) => change_spell_stat(event.target, 'duration'));
         spellConcentrationCheckbox.addEventListener('change', (event) => change_spell_concentration(event.target));
         spellUpcastTextarea.addEventListener('keyup', (event) => change_spell_upcast(event.target));
+
+        colorOverrideInput.addEventListener('keyup', (event) => change_color_override(event.target));
+        colorOverrideInput.addEventListener('change', (event) => change_color_override(event.target));
+        colorOverridePicker.addEventListener('input', (event) => pick_color_override(event.target));
+        colorOverrideReset.addEventListener('click', () => reset_color_override(i));
+
+        featureClassInput.addEventListener('keyup', (event) => change_feature_field(event.target, 'class'));
+        featureSubclassInput.addEventListener('keyup', (event) => change_feature_field(event.target, 'subclass'));
+        featureLevelInput.addEventListener('keyup', (event) => change_feature_field(event.target, 'level'));
+
+        // Markdown editing shortcuts (Ctrl/Cmd + B / I) on the rich-text fields.
+        attach_markdown_shortcuts(detailsTextarea);
+        attach_markdown_shortcuts(spellUpcastTextarea);
     }
     } // end attachAllCardListeners
 
@@ -817,7 +951,7 @@
         const card_name = document.getElementById(`card-name-${item_number}`); // Use const
 
         if (element.value === "") { // Use strict equality
-            card_name.innerHTML = translation[currentLanguage]["item_name"];
+            card_name.innerHTML = name_placeholder(get_card_type(item_number));
         } else {
             card_name.innerHTML = "&#8203;" + element.value;
         }
@@ -963,23 +1097,23 @@
         const item_number = get_item_number(element);
         const editor = document.getElementById(`item-editor-${item_number}`);
         const card = document.getElementById(`card-${item_number}`);
-        const value = element.value === "spell" ? "spell" : "item";
+        const value = CARD_TYPES.includes(element.value) ? element.value : "item";
         editor.setAttribute('data-card-type', value);
         card.setAttribute('data-card-type', value);
 
         // Refresh placeholders + dependent labels (name placeholder, details placeholder)
         const itemNameInput = document.getElementById(`item-name-${item_number}`);
         const detailsTextarea = document.getElementById(`item-details-${item_number}`);
-        const t = translation[currentLanguage];
-        itemNameInput.placeholder = value === "spell" ? t["spell_name"] : t["item_name"];
-        detailsTextarea.placeholder = value === "spell" ? t["spell_details"] : t["item_details"];
+        itemNameInput.placeholder = name_placeholder(value);
+        detailsTextarea.placeholder = details_placeholder(value);
 
         // Refresh card-name placeholder if name is empty.
         if (itemNameInput.value === "") {
             const card_name = document.getElementById(`card-name-${item_number}`);
-            card_name.innerHTML = value === "spell" ? t["spell_name"] : t["item_name"];
+            card_name.innerHTML = name_placeholder(value);
         }
         refresh_spell_card(item_number);
+        refresh_feature_card(item_number);
         fit_text();
     }
 
@@ -1167,6 +1301,218 @@
         change_spell_upcast(upcastTextarea);
     }
 
+    // --- Class feature handlers ---
+
+    // Renders one of the feature badges (class / subclass / level) and hides the
+    // whole badge row when none of them carries a value.
+    function change_feature_field(element, kind) {
+        const item_number = get_item_number(element);
+        const badge = document.getElementById(`card-feature-${kind}-${item_number}`);
+        if (!badge) return;
+        const value = element.value.trim();
+        // The level badge is prefixed by its label ("Niveau 3"), the others are raw.
+        badge.textContent = value
+            ? (kind === 'level' ? `${translation[currentLanguage]["feature_level"]} ${value}` : value)
+            : '';
+        badge.classList.toggle('empty', !value);
+
+        const row = document.getElementById(`card-feature-badges-${item_number}`);
+        if (row) {
+            const hasAny = ['class', 'subclass', 'level'].some(k => {
+                const input = document.getElementById(`feature-${k}-${item_number}`);
+                return input && input.value.trim() !== '';
+            });
+            row.classList.toggle('empty', !hasAny);
+        }
+        fit_text();
+    }
+
+    // Re-renders the feature badges from the current editor values (language change,
+    // card type flip, data load).
+    function refresh_feature_card(item_number) {
+        ['class', 'subclass', 'level'].forEach(kind => {
+            const input = document.getElementById(`feature-${kind}-${item_number}`);
+            if (input) change_feature_field(input, kind);
+        });
+    }
+
+    // --- Color override ---
+
+    // Accepts "#abc", "abc", "#aabbcc", "AABBCC" → "#aabbcc". Returns null otherwise.
+    function normalize_hex_color(value) {
+        if (!value) return null;
+        let hex = String(value).trim().replace(/^#/, '');
+        if (/^[0-9a-fA-F]{3}$/.test(hex)) {
+            hex = hex.split('').map(c => c + c).join('');
+        }
+        if (!/^[0-9a-fA-F]{6}$/.test(hex)) return null;
+        return '#' + hex.toLowerCase();
+    }
+
+    function hex_to_hsl(hex) {
+        const r = parseInt(hex.slice(1, 3), 16) / 255;
+        const g = parseInt(hex.slice(3, 5), 16) / 255;
+        const b = parseInt(hex.slice(5, 7), 16) / 255;
+        const max = Math.max(r, g, b);
+        const min = Math.min(r, g, b);
+        const l = (max + min) / 2;
+        let h = 0;
+        let s = 0;
+        if (max !== min) {
+            const d = max - min;
+            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+            if (max === r) h = ((g - b) / d + (g < b ? 6 : 0));
+            else if (max === g) h = (b - r) / d + 2;
+            else h = (r - g) / d + 4;
+            h /= 6;
+        }
+        return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
+    }
+
+    // Rarity/element backgrounds are radial gradients (light center → darker edge);
+    // build the same shape around the chosen color, which stays exact on the outer
+    // edge so the printed border really is the hex the user picked.
+    function color_override_background(hex) {
+        const { h, s, l } = hex_to_hsl(hex);
+        const light = Math.min(96, l + 18);
+        return `radial-gradient(circle, hsl(${h}, ${s}%, ${light}%), ${hex})`;
+    }
+
+    // Applies (or clears) the override on the card border area. Inline styles win
+    // over the rarity/element class rules, so clearing them restores the default.
+    function change_color_override(element) {
+        const item_number = get_item_number(element);
+        const card = document.getElementById(`card-${item_number}`);
+        const picker = document.getElementById(`item-color-override-picker-${item_number}`);
+        const raw = element.value.trim();
+        const hex = normalize_hex_color(raw);
+
+        if (hex) {
+            card.style.background = color_override_background(hex);
+            if (picker) picker.value = hex;
+            element.classList.remove('invalid');
+        } else {
+            card.style.background = '';
+            element.classList.toggle('invalid', raw !== '');
+        }
+    }
+
+    function pick_color_override(picker) {
+        const item_number = get_item_number(picker);
+        const input = document.getElementById(`item-color-override-${item_number}`);
+        input.value = picker.value;
+        change_color_override(input);
+        debouncedSaveState();
+    }
+
+    function reset_color_override(item_number) {
+        const input = document.getElementById(`item-color-override-${item_number}`);
+        input.value = '';
+        change_color_override(input);
+        debouncedSaveState();
+    }
+
+    // --- Markdown shortcuts (Ctrl/Cmd + B / I) ---
+
+    const MARKDOWN_SHORTCUTS = { b: '**', i: '*' };
+
+    // True when the text immediately around the selection is exactly `marker`.
+    // For italic we count the run of asterisks so "**gras**" isn't mistaken for
+    // an italic wrapper (pressing Ctrl+I there should give "***gras***").
+    function selection_is_wrapped(before, after, marker) {
+        if (!before.endsWith(marker) || !after.startsWith(marker)) return false;
+        if (marker === '*') {
+            const beforeRun = (before.match(/\*+$/) || [''])[0].length;
+            const afterRun = (after.match(/^\*+/) || [''])[0].length;
+            return beforeRun % 2 === 1 && afterRun % 2 === 1;
+        }
+        return true;
+    }
+
+    // Same idea, but for markers that are part of the selection itself
+    // (the user selected "**gras**", markers included).
+    function selection_contains_markers(selected, marker) {
+        const len = marker.length;
+        if (selected.length < 2 * len) return false;
+        if (!selected.startsWith(marker) || !selected.endsWith(marker)) return false;
+        if (marker === '*') {
+            const leadRun = (selected.match(/^\*+/) || [''])[0].length;
+            const tailRun = (selected.match(/\*+$/) || [''])[0].length;
+            return leadRun % 2 === 1 && tailRun % 2 === 1;
+        }
+        return true;
+    }
+
+    // Insert through execCommand when available so the browser's native undo
+    // stack (Ctrl+Z) keeps working; fall back to a plain value rewrite.
+    function insert_text_at_selection(textarea, text) {
+        textarea.focus();
+        let inserted = false;
+        try {
+            inserted = document.execCommand('insertText', false, text);
+        } catch (e) {
+            inserted = false;
+        }
+        if (!inserted) {
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            textarea.value = textarea.value.slice(0, start) + text + textarea.value.slice(end);
+            textarea.selectionStart = textarea.selectionEnd = start + text.length;
+        }
+    }
+
+    function toggle_markdown_marker(textarea, marker) {
+        const value = textarea.value;
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const selected = value.slice(start, end);
+        const before = value.slice(0, start);
+        const after = value.slice(end);
+        const len = marker.length;
+
+        let replaceStart = start;
+        let replaceEnd = end;
+        let replacement;
+        let innerOffset; // where the payload starts inside the replacement
+
+        if (selection_contains_markers(selected, marker)) {
+            // The markers are part of the selection ("**gras**" selected) → strip them.
+            replacement = selected.slice(len, selected.length - len);
+            innerOffset = 0;
+        } else if (selection_is_wrapped(before, after, marker)) {
+            // The markers sit just outside the selection → remove them.
+            replaceStart = start - len;
+            replaceEnd = end + len;
+            replacement = selected;
+            innerOffset = 0;
+        } else {
+            replacement = marker + selected + marker;
+            innerOffset = len;
+        }
+
+        const payloadLength = replacement.length - 2 * innerOffset;
+        textarea.setSelectionRange(replaceStart, replaceEnd);
+        insert_text_at_selection(textarea, replacement);
+
+        const innerStart = replaceStart + innerOffset;
+        textarea.setSelectionRange(innerStart, innerStart + payloadLength);
+
+        // Refresh the card preview + persist, as a normal keystroke would.
+        textarea.dispatchEvent(new Event('input', { bubbles: true }));
+        textarea.dispatchEvent(new Event('keyup', { bubbles: true }));
+    }
+
+    function attach_markdown_shortcuts(textarea) {
+        if (!textarea) return;
+        textarea.addEventListener('keydown', (event) => {
+            if (!(event.ctrlKey || event.metaKey) || event.altKey) return;
+            const marker = MARKDOWN_SHORTCUTS[event.key.toLowerCase()];
+            if (!marker) return;
+            event.preventDefault();
+            toggle_markdown_marker(textarea, marker);
+        });
+    }
+
     // --- Save/Load Functions ---
 
     function getAllCardsData() {
@@ -1196,6 +1542,12 @@
                 spellDuration: document.getElementById(`spell-duration-${i}`).value,
                 spellConcentration: document.getElementById(`spell-concentration-${i}`).checked,
                 spellUpcast: document.getElementById(`spell-upcast-${i}`).value,
+                // Class feature fields
+                featureClass: document.getElementById(`feature-class-${i}`).value,
+                featureSubclass: document.getElementById(`feature-subclass-${i}`).value,
+                featureLevel: document.getElementById(`feature-level-${i}`).value,
+                // Border color override (hex, empty = rarity/element default)
+                colorOverride: document.getElementById(`item-color-override-${i}`).value,
             };
             allCardsData.push(cardData);
         }
@@ -1275,6 +1627,10 @@
             spellDuration: '',
             spellConcentration: false,
             spellUpcast: '',
+            featureClass: '',
+            featureSubclass: '',
+            featureLevel: '',
+            colorOverride: '',
         };
     }
 
@@ -1286,6 +1642,7 @@
             || c.spellCastingTime || c.spellRange || c.spellDamage || c.spellDamageType
             || c.spellDuration || c.spellUpcast
             || c.spellConcentration || c.spellUtility || c.spellAoe
+            || c.featureClass || c.featureSubclass || c.featureLevel
             || (c.charges && c.charges !== '0'));
     }
 
@@ -1358,7 +1715,12 @@
             const spellConcentrationCheckbox = document.getElementById(`spell-concentration-${i}`);
             const spellUpcastTextarea = document.getElementById(`spell-upcast-${i}`);
 
-            cardTypeSelect.value = cardData.cardType === 'spell' ? 'spell' : 'item';
+            const featureClassInput = document.getElementById(`feature-class-${i}`);
+            const featureSubclassInput = document.getElementById(`feature-subclass-${i}`);
+            const featureLevelInput = document.getElementById(`feature-level-${i}`);
+            const colorOverrideInput = document.getElementById(`item-color-override-${i}`);
+
+            cardTypeSelect.value = CARD_TYPES.includes(cardData.cardType) ? cardData.cardType : 'item';
             nameInput.value = cardData.name || '';
             raritySelect.value = cardData.rarity || 'common';
             shortDescCheckbox.checked = cardData.shortDescription !== false;
@@ -1381,13 +1743,19 @@
             spellConcentrationCheckbox.checked = !!cardData.spellConcentration;
             spellUpcastTextarea.value = cardData.spellUpcast || '';
 
+            featureClassInput.value = cardData.featureClass || '';
+            featureSubclassInput.value = cardData.featureSubclass || '';
+            featureLevelInput.value = cardData.featureLevel || '';
+            colorOverrideInput.value = normalize_hex_color(cardData.colorOverride) || '';
+
             // Trigger all update functions to refresh the card previews
             [cardTypeSelect, raritySelect, shortDescCheckbox, imageReqCheckbox, typeReqCheckbox,
              spellLevelSelect, spellElementSelect, spellUtilityCheckbox, spellAoeCheckbox, spellConcentrationCheckbox]
                 .forEach(el => el.dispatchEvent(new Event('change', { bubbles: true })));
             [nameInput, typeValueInput, detailsTextarea,
              spellCastingTimeInput, spellRangeInput, spellDamageInput, spellDamageTypeInput,
-             spellDurationInput, spellUpcastTextarea]
+             spellDurationInput, spellUpcastTextarea,
+             featureClassInput, featureSubclassInput, featureLevelInput, colorOverrideInput]
                 .forEach(el => el.dispatchEvent(new Event('keyup', { bubbles: true })));
 			chargesRange.dispatchEvent(new Event('input', { bubbles: true }));
         });
@@ -1443,6 +1811,12 @@
                 isEmpty = !name && !details && !hasImage
                     && !castingTime && !range && !damage && !damageType && !duration && !upcast
                     && !concentration && !utility && !aoe;
+            } else if (cardType === 'feature') {
+                const featureClass = document.getElementById(`feature-class-${i}`).value.trim();
+                const featureSubclass = document.getElementById(`feature-subclass-${i}`).value.trim();
+                const featureLevel = document.getElementById(`feature-level-${i}`).value.trim();
+                isEmpty = !name && !details && !hasImage
+                    && !featureClass && !featureSubclass && !featureLevel;
             } else {
                 const typeValue = document.getElementById(`item-type-value-${i}`).value.trim();
                 const charges = document.getElementById(`item-charges-${i}`).value;

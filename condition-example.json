@@ -1,0 +1,25 @@
+[
+  {
+    "cardType": "item",
+    "name": "Blinded",
+    "rarity": "common",
+    "shortDescription": false,
+    "imageRequired": true,
+    "imageDataUrl": "",
+    "typeRequired": true,
+    "typeValue": "",
+    "details": "Can’t see. Attacks against you have advantage, and your attacks have disadvantage.",
+    "charges": "0",
+    "spellLevel": "cantrip",
+    "spellElement": "aucun",
+    "spellUtility": false,
+    "spellAoe": false,
+    "spellCastingTime": "",
+    "spellRange": "",
+    "spellDamage": "",
+    "spellDamageType": "",
+    "spellDuration": "",
+    "spellConcentration": false,
+    "spellUpcast": ""
+  }
+]
