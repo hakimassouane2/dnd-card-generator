@@ -47,13 +47,21 @@ main {
         margin: 0 !important;
     }
 
-    html, body {
+    html, body, main {
         height: auto !important;
+        max-height: none !important;
         overflow: visible !important;
         background: transparent !important;
 		padding: 0 !important;
 		margin: 0 !important;
     }
+
+	/* main a overflow-x: hidden a l'ecran, ce qui force overflow-y: auto et
+	   fait apparaitre une scrollbar dans le PDF. */
+	main {
+		display: block !important;
+		width: auto !important;
+	}
 
     .print-page {
         width: 210mm;
@@ -78,6 +86,7 @@ main {
         display: block !important;
         height: auto !important;
 		width: auto !important;
+		overflow: visible !important;
 		max-width: none !important;
 		box-shadow: none !important;
         background: transparent !important;
