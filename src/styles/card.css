@@ -1,0 +1,459 @@
+/* ---------------------------------------------------------------------------
+   Rendu de carte et impression A4
+   ---------------------------------------------------------------------------
+   PORTE TEL QUEL depuis l'ancienne appli. Toutes les dimensions restent en mm :
+   c'est ce qui garantit que la sortie imprimee correspond a des cartes de
+   63,5 x 88,9 mm, quel que soit le zoom ou le DPI de l'ecran.
+
+   NE PAS remplacer ces regles par des utilitaires Tailwind. Tailwind travaille
+   en rem/px et suit la taille de police du navigateur : la carte imprimee
+   changerait de dimensions. Tailwind ne sert qu'au chrome de l'appli.
+
+   Les degrades de rarete et d'element sont conserves a l'identique : ils font
+   partie de la carte, pas de l'interface.
+--------------------------------------------------------------------------- */
+
+/* Reset local : l'ancien CSS s'appuyait sur un reset global `* { margin: 0 }`
+   et sur Trebuchet MS herite par tous les elements. On le rescope a la planche
+   pour ne pas dependre du preflight de Tailwind. */
+.print-page,
+.print-page *,
+.print-page *::before,
+.print-page *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Trebuchet MS", Tahoma, sans-serif;
+}
+
+.print-page {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  grid-template-columns: repeat(3, 63.5mm);
+  grid-template-rows: repeat(3, 88.9mm);
+  gap: 3px;
+  background-color: #fff;
+  box-shadow: rgb(38 57 77) 0 20px 30px -10px;
+}
+
+.card-container {
+  border: 0.6mm solid black;
+  padding: 2.8mm;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9mm;
+}
+
+.card-outline {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 0.6mm solid black;
+  border-radius: 2.8mm;
+  background-color: white;
+  flex-grow: 1;
+}
+
+.card-outline > hr {
+  border: none;
+  border-top: 0.6mm solid black;
+}
+
+.card-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: gainsboro;
+  margin: 1.4mm;
+  padding: 0.9mm;
+  border-radius: 1.8mm;
+  width: auto;
+  text-align: center;
+  font-size: 4.5mm;
+}
+
+.card-short-description {
+  margin: 1.4mm;
+  margin-top: 0;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: auto;
+  gap: 1.4mm;
+}
+
+.card-short-description.no-image {
+  grid-template-columns: 1fr;
+  height: min-content;
+}
+
+.card-short-description.no-image > .characteristics {
+  grid-column: 1;
+}
+
+.card-short-description.no-image > .characteristics > .card-type {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+
+.card-short-description.no-image.no-type {
+  margin-bottom: 0;
+}
+
+.image {
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  aspect-ratio: 1;
+  justify-self: center;
+  align-self: center;
+  background-color: gainsboro;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  border-radius: 1.4mm;
+}
+
+.characteristics {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-short-description.no-image > .characteristics {
+  grid-column: 1;
+}
+
+.item-type-header {
+  align-self: flex-start;
+  padding-bottom: 2px;
+  font-size: 1rem;
+}
+
+.card-type {
+  width: 100%;
+}
+
+.item-type {
+  width: 100%;
+  background-color: gainsboro;
+  padding: 3px;
+  border-radius: 7px 0 7px 0;
+  font-size: 1rem;
+}
+
+/* height: 0 + flex-grow: 1 donne a textFit une boite de hauteur fixe a
+   remplir. Sans ca l'ajustement de police ne converge pas. */
+.card-details {
+  height: 0mm;
+  background-color: gainsboro;
+  overflow-wrap: break-word;
+  flex-grow: 1;
+  text-align: justify;
+  text-wrap-style: pretty;
+  margin: 1.4mm;
+  border-radius: 1.6mm;
+  padding: 1.8mm;
+}
+
+.card-details ul,
+.card-details ol {
+  padding-left: 1.2em;
+}
+
+.charges-container {
+  display: flex;
+  align-items: center;
+  flex-shrink: 1;
+  padding: 0.9mm;
+}
+
+.charges-circles {
+  flex-grow: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2mm;
+}
+
+.charge-circle {
+  width: 4.2mm;
+  height: 4.2mm;
+  border-radius: 50%;
+  border: 0.4mm solid black;
+  background-color: white;
+}
+
+/* --- Cartes de sort : badges et statistiques --- */
+
+.spell-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1mm;
+  margin: 1.4mm;
+  margin-top: 0;
+  justify-content: center;
+}
+
+.spell-level-badge,
+.spell-element-badge,
+.spell-utility-badge,
+.spell-aoe-badge {
+  background-color: gainsboro;
+  padding: 0.4mm 1.4mm;
+  border-radius: 1.6mm;
+  font-size: 3mm;
+  font-weight: bold;
+  /* Meme epaisseur de bordure sur tous les badges pour que le texte reste
+     aligne verticalement : seul le badge utilitaire la colore. */
+  border: 0.3mm solid transparent;
+}
+
+.spell-utility-badge {
+  background-color: #fff8d8;
+  border-color: #c8a500;
+}
+
+.spell-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6mm;
+  width: 100%;
+  font-size: 3mm;
+  text-align: left;
+  padding: 0.4mm 0;
+}
+
+.spell-stat-line {
+  overflow-wrap: anywhere;
+}
+
+.spell-stat-line .spell-stat-label {
+  margin-right: 0.4em;
+}
+
+.spell-conc {
+  background-color: gainsboro;
+  padding: 0.4mm 1mm;
+  border-radius: 1mm;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 0.4mm;
+}
+
+.card-upcast {
+  margin: 1.4mm;
+  margin-top: 0;
+  padding: 1.4mm;
+  background-color: gainsboro;
+  border-radius: 1.4mm;
+  font-size: 3mm;
+  overflow-wrap: break-word;
+}
+
+.card-upcast .card-upcast-label {
+  margin-right: 0.3em;
+}
+
+.card-upcast .card-upcast-value > * {
+  display: inline;
+}
+
+/* --- Cartes d'aptitude : badges --- */
+
+.feature-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1mm;
+  margin: 1.4mm;
+  margin-top: 0;
+}
+
+.feature-class-badge,
+.feature-subclass-badge,
+.feature-level-badge {
+  background-color: gainsboro;
+  padding: 0.4mm 1.4mm;
+  border-radius: 1.6mm;
+  font-size: 3mm;
+  font-weight: bold;
+  border: 0.3mm solid transparent;
+}
+
+.feature-subclass-badge {
+  font-weight: normal;
+  font-style: italic;
+}
+
+/* --- Fonds : rarete (objets), element (sorts), parchemin (aptitudes) ---
+   Surcharges par --card-bg quand la carte definit une couleur personnalisee. */
+
+.card-container[data-card-type="item"].rarity-uncommon {
+  background: radial-gradient(circle, hsl(141, 76%, 61%), hsl(141, 76%, 31%));
+}
+.card-container[data-card-type="item"].rarity-rare {
+  background: radial-gradient(circle, hsl(211, 100%, 70%), hsl(211, 100%, 40%));
+}
+.card-container[data-card-type="item"].rarity-epic {
+  background: radial-gradient(circle, hsl(271, 76%, 81%), hsl(271, 76%, 51%));
+}
+.card-container[data-card-type="item"].rarity-legendary {
+  background: radial-gradient(circle, hsl(36, 100%, 75%), hsl(36, 100%, 45%));
+}
+.card-container[data-card-type="item"].rarity-artifact {
+  background: radial-gradient(circle, hsl(355, 78%, 76%), hsl(355, 78%, 46%));
+}
+
+.card-container[data-card-type="spell"].element-aucun {
+  background: radial-gradient(circle, hsl(0, 0%, 88%), hsl(0, 0%, 55%));
+}
+.card-container[data-card-type="spell"].element-feu {
+  background: radial-gradient(circle, hsl(15, 95%, 75%), hsl(0, 80%, 45%));
+}
+.card-container[data-card-type="spell"].element-glace {
+  background: radial-gradient(circle, hsl(195, 90%, 82%), hsl(210, 85%, 55%));
+}
+.card-container[data-card-type="spell"].element-foudre {
+  background: radial-gradient(circle, hsl(50, 100%, 78%), hsl(40, 95%, 50%));
+}
+.card-container[data-card-type="spell"].element-vent {
+  background: radial-gradient(circle, hsl(160, 50%, 82%), hsl(160, 40%, 50%));
+}
+.card-container[data-card-type="spell"].element-radiant {
+  background: radial-gradient(circle, hsl(50, 100%, 85%), hsl(45, 100%, 60%));
+}
+.card-container[data-card-type="spell"].element-necrotique {
+  background: radial-gradient(circle, hsl(290, 35%, 60%), hsl(285, 50%, 25%));
+}
+
+.card-container[data-card-type="feature"] {
+  background: radial-gradient(circle, hsl(38, 45%, 88%), hsl(35, 35%, 55%));
+}
+
+/* Couleur personnalisee : gagne sur la rarete et sur l'element. */
+.card-container[style*="--card-bg"] {
+  background: var(--card-bg) !important;
+}
+
+/* Reperage a l'ecran de la carte en cours d'edition. Purement visuel :
+   neutralise a l'impression, plus bas. */
+.card-container.is-selected {
+  outline: 2px solid var(--accent-solid);
+  outline-offset: 2px;
+}
+
+/* Apercu d'une carte isolee, hors planche. La carte tire normalement ses
+   dimensions de la grille A4 ; seule, elle s'effondrerait a la hauteur de son
+   contenu et l'ajustement de police n'aurait plus de boite a remplir. */
+.single-card-preview {
+  width: 63.5mm;
+  height: 88.9mm;
+  display: grid;
+}
+
+.single-card-preview > .card-container {
+  width: 100%;
+  height: 100%;
+}
+
+/* En mode edition, les planches restent montees hors ecran pour que Ctrl+P
+   fonctionne sans changer de mode. `opacity` et non `display: none` : un
+   element sans mise en page mesure 0, et l'ajustement de police tomberait au
+   minimum sur toutes les cartes. */
+.sheets-offscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -10;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* --- Impression ------------------------------------------------------------
+   Une planche par page, sans marge, couleurs forcees. */
+
+@media print {
+  @page {
+    size: A4 portrait !important;
+    margin: 0 !important;
+  }
+
+  html,
+  body {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+
+  /* Tout le chrome de l'appli disparait : il ne reste que .print-sheets. */
+  .not-printable {
+    display: none !important;
+  }
+
+  /* Les planches tenues hors ecran redeviennent le contenu de la page. */
+  .sheets-offscreen {
+    position: static !important;
+    z-index: auto !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  .print-sheets {
+    display: block !important;
+    position: static !important;
+    height: auto !important;
+    max-height: none !important;
+    width: auto !important;
+    max-width: none !important;
+    overflow: visible !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+  }
+
+  .print-page {
+    width: 210mm;
+    height: 297mm;
+    margin: 0 !important;
+    gap: 0 !important;
+    box-shadow: none !important;
+    break-after: page;
+    page-break-after: always;
+    transform: none !important;
+  }
+
+  .print-page:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+
+  /* Les emplacements vides de la derniere planche ne doivent laisser
+     ni bordure ni fond. `visibility` plutot que `display` pour que la grille
+     conserve ses 9 cellules et que les cartes gardent leur position. */
+  .card-container.card-empty,
+  .card-container.card-empty * {
+    visibility: hidden !important;
+  }
+  .card-container.card-empty {
+    border: none !important;
+    background: transparent !important;
+  }
+
+  /* Le lisere de selection ne concerne que l'ecran. */
+  .card-container.is-selected {
+    outline: none !important;
+  }
+}

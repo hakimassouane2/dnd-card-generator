@@ -1,83 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Nimble Card Generator</title>
-        <link rel="stylesheet" href="styles.css" type="text/css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
-        <script src="https://cdn.rawgit.com/showdownjs/showdown/2.1.0/dist/showdown.min.js"></script>
-        <script src="textfit.min.js"></script>
-    </head>
-    <body>
-        <div id="top-menu-container" class="not-printable">
-            <label>
-                <span id="language-icon" class="material-symbols-outlined">
-                language
-                </span>
-                <select id="language-select">
-                    <option value="english">English</option>
-                    <option value="french" selected>Français</option>
-                </select>
-            </label>
-
-            <label for="load-input" id="load-button" class="pretty-button not-printable">
-                <span id="load-button-content" class="material-symbols-outlined">folder_open</span>
-            </label>
-            <input type="file" id="load-input" style="display: none;" accept=".json">
-
-            <button id="save-button" class="pretty-button not-printable">
-                <span id="save-button-content" class="material-symbols-outlined">save</span>
-            </button>
-
-            <button id="clear-button" class="pretty-button not-printable">
-                <span id="clear-button-content" class="material-symbols-outlined">delete_sweep</span>
-            </button>
-
-            <div id="page-count-control" class="not-printable" title="Pages">
-                <button id="page-count-decrement" class="pretty-button" type="button" aria-label="Remove page">
-                    <span class="material-symbols-outlined">remove</span>
-                </button>
-                <span id="page-count-display">1</span>
-                <button id="page-count-increment" class="pretty-button" type="button" aria-label="Add page">
-                    <span class="material-symbols-outlined">add</span>
-                </button>
-            </div>
-
-            <button id="toggle-preview-button" class="pretty-button material-symbols-outlined">
-                <!-- <span id="toggle-preview-button-content">Toggle Preview</span> -->
-                <span id="toggle-preview-button-content" class="material-symbols-outlined">
-                    <!-- preview -->
-                    <!-- preview_off -->
-                    <!-- visibility -->
-                    <!-- visibility_off -->
-                </span>
-            </button>
-
-            <button id="print-button" class="pretty-button not-printable">
-                <span id="print-button-content" class="material-symbols-outlined">print</span>
-            </button>
-
-        </div>
-
-        <main id="main-section">
-            <div class="editor-container not-printable">
-                <div class="scrollable">
-                    <div id="item-editors"></div>
-                </div>
-            </div>
-    
-            <div class="A4-container">
-                <div class="A4-wrapper">
-                    <div class="A4" id="A4">
-                    </div>
-                </div>
-            </div>
-        </main>
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script> -->
-        <!-- <script src="html2pdf.bundle.min.js"></script> -->
-        <!-- <script src="html2canvas.min.js"></script>
-        <script src="jspdf.umd.min.js"></script> -->
-        <script src="script.js"></script>
-    </body>
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nimble Card Generator</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
