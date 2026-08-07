@@ -1,0 +1,52 @@
+name: Déploiement GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  # Permet de relancer un déploiement à la main depuis l'onglet Actions.
+  workflow_dispatch:
+
+# Autorisations minimales nécessaires au déploiement Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Un déploiement à la fois ; les push suivants attendent plutôt que d'annuler
+# celui en cours, pour ne pas laisser le site dans un état intermédiaire.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # tsc tourne avant vite build (script `build`) : une erreur de type
+      # arrête le déploiement au lieu de publier une version cassée.
+      - run: npm run build
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
